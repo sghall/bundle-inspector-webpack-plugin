@@ -21,6 +21,7 @@
   "bin": "bin.js",
   "main": "index.js",
   "devDependencies": {
+    "@types/chalk": "^0.4.31",
     "@types/meow": "^3.6.2",
     "@types/node": "^8.0.14",
     "eslint": "^4.2.0",
@@ -36,6 +37,7 @@
     "typescript": "^2.4.2"
   },
   "dependencies": {
+    "chalk": "^2.0.1",
     "meow": "^3.7.0"
   },
   "lint-staged": {
