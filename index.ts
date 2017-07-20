@@ -1,11 +1,12 @@
-import { processSourceMaps } from "./process";
-import { launchServer } from "./server";
-import {
-  formatProcessedSourceMaps,
-  getWritePathForSerializedData
-} from "./utils";
+import { processStats } from "./process";
+// import { launchServer } from "./server";
+// import {
+//   formatProcessedSourceMaps,
+//   getWritePathForSerializedData
+// } from "./utils";
 import * as meow from "meow";
 import * as fs from "fs";
+import * as path from "path";
 
 const cli = meow(
   `
@@ -35,22 +36,24 @@ if (cli.input.length === 0 && !cli.flags["demo"]) {
 }
 
 if (cli.flags["demo"]) {
-  launchServer("demo.json");
+  // launchServer("demo.json");
 } else {
-  const processed = processSourceMaps(cli.input[0], {
-    logLevel: cli.flags["verbose"] || cli.flags["v"] ? "verbose" : "silent"
-  });
+  // const processed = processSourceMaps(cli.input[0], {
+  //   logLevel: cli.flags["verbose"] || cli.flags["v"] ? "verbose" : "silent"
+  // });
 
-  const stringifedData = formatProcessedSourceMaps(processed);
+  const map: string = fs.readFileSync(path.resolve(cli.input[0]), "utf-8");
 
-  if (cli.flags["stdout"] || cli.flags["o"]) {
-    console.log(stringifedData);
-  } else {
-    const dataPath = `data_${Date.now()}`;
-    const writePath = getWritePathForSerializedData(dataPath);
+  // const stringifedData = formatProcessedSourceMaps(processed);
 
-    fs.writeFileSync(writePath, stringifedData);
+  // if (cli.flags["stdout"] || cli.flags["o"]) {
+  console.log("input!!!", processStats(JSON.parse(map)));
+  // } else {
+  //   const dataPath = `data_${Date.now()}`;
+  //   const writePath = getWritePathForSerializedData(dataPath);
 
-    launchServer(dataPath);
-  }
+  // fs.writeFileSync(writePath, stringifedData);
+
+  // launchServer(dataPath);
+  // }
 }
