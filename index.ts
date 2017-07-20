@@ -5,7 +5,6 @@ import {
   getWritePathForSerializedData
 } from "./utils";
 import * as meow from "meow";
-import * as globby from "globby";
 import * as fs from "fs";
 
 const cli = meow(
@@ -38,8 +37,7 @@ if (cli.input.length === 0 && !cli.flags["demo"]) {
 if (cli.flags["demo"]) {
   launchServer("demo.json");
 } else {
-  const bundleSourceMaps = globby.sync(cli.input);
-  const processed = processSourceMaps(bundleSourceMaps, {
+  const processed = processSourceMaps(cli.input[0], {
     logLevel: cli.flags["verbose"] || cli.flags["v"] ? "verbose" : "silent"
   });
 
