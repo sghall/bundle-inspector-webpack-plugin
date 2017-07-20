@@ -38,7 +38,9 @@
   },
   "dependencies": {
     "chalk": "^2.0.1",
-    "meow": "^3.7.0"
+    "meow": "^3.7.0",
+    "opn": "^5.1.0",
+    "webpack-bundle-analyzer": "^2.8.3"
   },
   "lint-staged": {
     "*.ts": [
