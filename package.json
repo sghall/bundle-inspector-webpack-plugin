@@ -1,26 +1,51 @@
 {
   "name": "analyzer-3d-webpack-plugin",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "WebGL Bundle Analyzer",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node index.ts",
+    "precommit": "lint-staged",
+    "build": "tsc",
+    "prepare-publish": "yarn run build && cd viz && yarn run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sghall/analyzer-3d-webpack-plugin.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Steven Hall <hall.steven.g@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sghall/analyzer-3d-webpack-plugin/issues"
   },
   "homepage": "https://github.com/sghall/analyzer-3d-webpack-plugin#readme",
+  "bin": "bin.js",
+  "main": "index.js",
   "devDependencies": {
+    "@types/meow": "^3.6.2",
+    "@types/node": "^8.0.14",
+    "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
+    "ts-node": "^3.2.0",
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "meow": "^3.7.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
