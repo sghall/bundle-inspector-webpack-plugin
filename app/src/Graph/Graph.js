@@ -7,6 +7,7 @@ import {
   forceLink,
   forceCenter
 } from "d3-force-3d";
+import colors from "./colors";
 
 class Graph extends Component {
   componentDidMount() {
@@ -47,33 +48,13 @@ class Graph extends Component {
 
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
 
-    const redMaterial = new THREE.MeshPhongMaterial({
-      color: "#9a0b20",
-      emissive: "#c7233c",
-      specular: "#f5f5f5",
-      shininess: 90
-    });
-
-    const greenMaterial = new THREE.MeshPhongMaterial({
-      color: "#008C9E",
-      emissive: "#005F6B",
-      specular: "#f5f5f5",
-      shininess: 90
-    });
-
     const node = container
       .selectAll("node")
       .data(nodes)
       .enter()
       .append("mesh")
       .attr("geometry", nodeGeometry)
-      .attr("material", d => {
-        if (d.path && d.path.startsWith("./node_modules")) {
-          return redMaterial;
-        }
-
-        return greenMaterial;
-      })
+      .attr("material", colors)
       .attr("position", () => {
         return { x: 0, y: 0, z: 0 };
       });
