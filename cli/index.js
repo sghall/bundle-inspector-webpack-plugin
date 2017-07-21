@@ -10,22 +10,16 @@ const server = require("./server");
 const cli = meow(
   `
   Usage:
-    bundle-buddy  <source_map_glob>
+    analyzer-3d-webpack-plugin  <stats file path>
 
   Options:
-    --verbose -v: Write verbose logging to stderr
-    --stdout -o: Write analysis to stdout
-    --demo: View a demo bundle
+    --demo: view demo
 
   Example:
-    bundle-buddy my_app/dist/*.map
+    analyzer-3d-webpack-plugin my_app/stats.json
 `,
   {
-    alias: {
-      o: "stdout",
-      v: "verbose"
-    },
-    boolean: ["stdout", "verbose", "demo"]
+    boolean: ["demo"]
   }
 );
 
@@ -46,7 +40,7 @@ if (cli.flags["demo"]) {
   fs.writeFileSync(writePath, processStats(stats));
 
   console.log(`
-    stat file: ${chalk.yellow(input)}
+    stats file: ${chalk.yellow(input)}
     data file: ${chalk.yellow(dataPath)}
   `);
 
