@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "description": "WebGL Bundle Analyzer",
   "scripts": {
-    "start": "ts-node index.ts",
-    "precommit": "lint-staged",
-    "build": "tsc",
-    "prepare-publish": "yarn run build && cd viz && yarn run build"
+    "start": "node cli/index.js",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -22,15 +20,10 @@
   "main": "index.js",
   "devDependencies": {
     "eslint": "^4.2.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-prettier": "^2.1.2",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.2",
-    "prettier": "^1.5.3",
-    "typescript": "^2.4.2"
+    "prettier": "^1.5.3"
   },
   "dependencies": {
     "chalk": "^2.0.1",
