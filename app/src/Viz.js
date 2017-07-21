@@ -23,7 +23,7 @@ class Viz extends Component {
     renderer.setClearColor(0x333333);
 
     const spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(-500, 1000, 0);
+    spotLight.position.set(0, 2000, 0);
 
     spotLight.castShadow = true;
 
@@ -31,7 +31,7 @@ class Viz extends Component {
     spotLight.shadow.mapSize.height = 1024;
 
     spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 4000;
+    spotLight.shadow.camera.far = 5000;
     spotLight.shadow.camera.fov = 30;
 
     scene.add(spotLight);
@@ -67,10 +67,13 @@ class Viz extends Component {
 
     const rootNode = select(scene);
     const container = rootNode.append("object");
-    const geometry = new THREE.SphereGeometry(2, 10, 10);
-    const material = new THREE.MeshPhongMaterial({
-      color: "blue",
-      shininess: 80
+
+    const nodeGeometry = new THREE.SphereGeometry(2, 10, 10);
+    const nodeMaterial = new THREE.MeshPhongMaterial({
+      color: "#008C9E",
+      emissive: "#005F6B",
+      specular: "#f5f5f5",
+      shininess: 90
     });
 
     const node = container
@@ -78,15 +81,46 @@ class Viz extends Component {
       .data(nodes)
       .enter()
       .append("mesh")
-      .attr("material", material)
-      .attr("geometry", geometry)
+      .attr("geometry", nodeGeometry)
+      .attr("material", nodeMaterial)
       .attr("position", () => {
         return { x: 0, y: 0, z: 0 };
+      });
+
+    const linkMaterial = new THREE.LineBasicMaterial({
+      color: 0xf5f5f5,
+      transparent: true
+    });
+
+    const link = container
+      .selectAll("link")
+      .data(links)
+      .enter()
+      .append("line")
+      .attr("material", linkMaterial)
+      .attr("geometry", () => {
+        const geometry = new THREE.Geometry();
+        geometry.vertices = [
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(0, 0, 0)
+        ];
+
+        return geometry;
       });
 
     function ticked() {
       node.attr("position", ({ x, y, z }) => {
         return { x, y, z };
+      });
+
+      link.each(function({ source, target }) {
+        this.geometry.vertices = [
+          new THREE.Vector3(source.x, source.y || 0, source.z || 0),
+          new THREE.Vector3(target.x, target.y || 0, target.z || 0)
+        ];
+
+        this.geometry.verticesNeedUpdate = true;
+        this.geometry.computeBoundingSphere();
       });
     }
 
