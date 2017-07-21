@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { select } from "subunit";
-import { range } from "d3-array";
 import {
   forceSimulation,
   forceManyBody,
@@ -11,7 +10,7 @@ import {
 
 class Viz extends Component {
   componentDidMount() {
-    const { canvas } = this;
+    const { canvas, props: { nodes, links } } = this;
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
@@ -44,19 +43,6 @@ class Viz extends Component {
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    const nodes = range(1000).map(function(i) {
-      return {
-        index: i
-      };
-    });
-
-    const links = range(nodes.length - 1).map(function(i) {
-      return {
-        source: Math.floor(Math.sqrt(i)),
-        target: i + 1
-      };
-    });
-
     forceSimulation()
       .numDimensions(3)
       .nodes(nodes)
@@ -69,7 +55,15 @@ class Viz extends Component {
     const container = rootNode.append("object");
 
     const nodeGeometry = new THREE.SphereGeometry(2, 10, 10);
-    const nodeMaterial = new THREE.MeshPhongMaterial({
+
+    const redMaterial = new THREE.MeshPhongMaterial({
+      color: "#9a0b20",
+      emissive: "#c7233c",
+      specular: "#f5f5f5",
+      shininess: 90
+    });
+
+    const greenMaterial = new THREE.MeshPhongMaterial({
       color: "#008C9E",
       emissive: "#005F6B",
       specular: "#f5f5f5",
@@ -82,7 +76,13 @@ class Viz extends Component {
       .enter()
       .append("mesh")
       .attr("geometry", nodeGeometry)
-      .attr("material", nodeMaterial)
+      .attr("material", d => {
+        if (d.path && d.path.startsWith("./node_modules")) {
+          return redMaterial;
+        }
+
+        return greenMaterial;
+      })
       .attr("position", () => {
         return { x: 0, y: 0, z: 0 };
       });

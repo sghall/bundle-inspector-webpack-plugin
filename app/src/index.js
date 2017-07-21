@@ -13,7 +13,35 @@ console.log(toLoadPath);
 fetch(toLoadPath, { credentials: "include" })
   .then(v => v.json())
   .then(data => {
-    ReactDOM.render(<App data={data} />, document.getElementById("root"));
+    const nodes = [];
+    const links = [];
+
+    function createNodesAndLinks(children, parent) {
+      for (let i = 0; i < children.length; i++) {
+        const target = children[i];
+
+        nodes.push(target);
+
+        links.push({
+          source: parent,
+          target
+        });
+
+        if (target.groups) {
+          createNodesAndLinks(target.groups, target);
+        }
+      }
+    }
+
+    nodes.push(data[0]);
+    createNodesAndLinks(data[0].groups, data[0]);
+
+    console.log(nodes, links);
+
+    ReactDOM.render(
+      <App data={data} nodes={nodes} links={links} />,
+      document.getElementById("root")
+    );
   })
   .catch(e => {
     document.body.textContent = `Error fetching data from ${toLoadPath}, ${e}`;
