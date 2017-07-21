@@ -32,7 +32,7 @@
     "webpack-bundle-analyzer": "^2.8.3"
   },
   "lint-staged": {
-    "*.js": [
+    "cli/*.js": [
       "prettier --write",
       "git add"
     ]
