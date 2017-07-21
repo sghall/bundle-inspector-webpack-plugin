@@ -7,7 +7,7 @@ const fileParam = new URLSearchParams(
   (window.location.search || "").slice(1)
 ).get("file");
 
-const toLoadPath = fileParam !== null ? `/${fileParam}` : "/demo.json";
+const toLoadPath = fileParam !== null ? `/${fileParam}` : "/demo";
 console.log(toLoadPath);
 
 fetch(toLoadPath, { credentials: "include" })

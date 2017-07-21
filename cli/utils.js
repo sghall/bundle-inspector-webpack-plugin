@@ -1,9 +1,9 @@
 const path = require("path");
 
-const VIZ_PATH = "/../app/public";
+const APP_PUBLIC = "/../app/public";
 
 module.exports = {
   getWritePathForSerializedData: (dataPath, contextPath = __dirname) => {
-    return path.join(contextPath, VIZ_PATH, dataPath || `data_${Date.now()}`);
+    return path.join(contextPath, APP_PUBLIC, dataPath || `data_${Date.now()}`);
   }
 };

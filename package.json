@@ -28,7 +28,9 @@
   },
   "dependencies": {
     "chalk": "^2.0.1",
+    "http-server": "^0.10.0",
     "meow": "^3.7.0",
+    "openport": "0.0.4",
     "opn": "^5.1.0",
     "webpack-bundle-analyzer": "^2.8.3"
   },
