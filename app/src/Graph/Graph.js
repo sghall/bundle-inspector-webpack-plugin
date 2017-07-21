@@ -8,14 +8,14 @@ import {
   forceCenter
 } from "d3-force-3d";
 
-class Viz extends Component {
+class Graph extends Component {
   componentDidMount() {
     const { canvas, props: { nodes, links } } = this;
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera();
-    camera.position.z = 500;
+    camera.position.z = 800;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(innerWidth, innerHeight);
@@ -23,15 +23,6 @@ class Viz extends Component {
 
     const spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(0, 2000, 0);
-
-    spotLight.castShadow = true;
-
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
-
-    spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 5000;
-    spotLight.shadow.camera.fov = 30;
 
     scene.add(spotLight);
 
@@ -46,7 +37,7 @@ class Viz extends Component {
     forceSimulation()
       .numDimensions(3)
       .nodes(nodes)
-      .force("link", forceLink(links).distance(20).strength(1))
+      .force("link", forceLink(links).distance(50).strength(0.25))
       .force("charge", forceManyBody())
       .force("center", forceCenter())
       .on("tick", ticked);
@@ -54,7 +45,7 @@ class Viz extends Component {
     const rootNode = select(scene);
     const container = rootNode.append("object");
 
-    const nodeGeometry = new THREE.SphereGeometry(2, 10, 10);
+    const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
 
     const redMaterial = new THREE.MeshPhongMaterial({
       color: "#9a0b20",
@@ -139,4 +130,4 @@ class Viz extends Component {
   }
 }
 
-export default Viz;
+export default Graph;

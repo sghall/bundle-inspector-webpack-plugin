@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Viz from "./Viz";
+import Graph from "./Graph";
 
 class App extends Component {
   render() {
@@ -8,7 +8,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Viz nodes={nodes} links={links} />
+        <Graph nodes={nodes} links={links} />
       </div>
     );
   }
