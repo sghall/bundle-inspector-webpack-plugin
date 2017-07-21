@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 
-// Default to the demo json if no file is passed.
 const fileParam = new URLSearchParams(
   (window.location.search || "").slice(1)
 ).get("file");
