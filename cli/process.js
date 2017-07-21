@@ -5,6 +5,7 @@ module.exports = {
     return file;
   },
   processStats: stats => {
-    return getViewerData(stats);
+    const processed = getViewerData(JSON.parse(stats));
+    return JSON.stringify(processed);
   }
 };

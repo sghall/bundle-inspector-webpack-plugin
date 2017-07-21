@@ -1,4 +1,5 @@
 const { processStats } = require("./process");
+const { getWritePathForSerializedData } = require("./utils");
 const meow = require("meow");
 const fs = require("fs");
 const path = require("path");
@@ -33,6 +34,14 @@ if (cli.input.length === 0 && !cli.flags["demo"]) {
 if (cli.flags["demo"]) {
   // launchServer('demo.json');
 } else {
-  const map = fs.readFileSync(path.resolve(cli.input[0]), "utf-8");
-  console.log("input!!!", processStats(JSON.parse(map)));
+  const stats = fs.readFileSync(path.resolve(cli.input[0]), "utf-8");
+
+  const dataPath = `data_${Date.now()}`;
+  const writePath = getWritePathForSerializedData(dataPath);
+
+  fs.writeFileSync(writePath, processStats(stats));
+
+  // launchServer(dataPath);
+
+  console.log("input!!!", writePath);
 }
