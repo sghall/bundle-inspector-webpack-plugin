@@ -21,9 +21,6 @@
   "bin": "bin.js",
   "main": "index.js",
   "devDependencies": {
-    "@types/chalk": "^0.4.31",
-    "@types/meow": "^3.6.2",
-    "@types/node": "^8.0.14",
     "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
@@ -33,7 +30,6 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.0.2",
     "prettier": "^1.5.3",
-    "ts-node": "^3.2.0",
     "typescript": "^2.4.2"
   },
   "dependencies": {
@@ -43,10 +39,6 @@
     "webpack-bundle-analyzer": "^2.8.3"
   },
   "lint-staged": {
-    "*.ts": [
-      "prettier --write",
-      "git add"
-    ],
     "*.js": [
       "prettier --write",
       "git add"
