@@ -4,6 +4,7 @@
   "description": "WebGL Bundle Analyzer",
   "scripts": {
     "start": "node cli/index.js",
+    "pretty": "prettier --write cli/*.js",
     "precommit": "lint-staged"
   },
   "repository": {
@@ -32,7 +33,7 @@
     "webpack-bundle-analyzer": "^2.8.3"
   },
   "lint-staged": {
-    "cli/*.js": [
+    "*": [
       "prettier --write",
       "git add"
     ]
