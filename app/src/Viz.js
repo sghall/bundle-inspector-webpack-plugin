@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-import * as subunit from "subunit";
+import { select } from "subunit";
 
 class Viz extends Component {
   componentDidMount() {
@@ -30,7 +30,7 @@ class Viz extends Component {
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    const rootNode = subunit.select(scene);
+    const rootNode = select(scene);
     const container = rootNode.append("object");
     const geometry = new THREE.BoxBufferGeometry(400, 400, 400);
     const material = new THREE.MeshPhongMaterial({ color: "blue" });
