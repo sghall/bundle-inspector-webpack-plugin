@@ -19,7 +19,7 @@ const cli = meow(
 `,
   {
     alias: {
-      o: "stdout",
+      o: 'stdout',
       v: "verbose"
     },
     boolean: ["stdout", "verbose", "demo"]
