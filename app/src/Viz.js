@@ -8,8 +8,6 @@ class Viz extends Component {
     const { innerWidth, innerHeight } = window;
     const aspect = innerWidth / innerHeight;
 
-    console.log(canvas);
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, aspect, 1, 6000);
     camera.position.z = 1000;
