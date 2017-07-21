@@ -47,6 +47,7 @@ class Viz extends Component {
       });
 
     const theta = 0.01;
+
     function animate() {
       rootNode.node().rotation.y += theta;
       boxes.each(function(d, i) {
