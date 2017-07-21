@@ -23,7 +23,7 @@
     "eject": "react-scripts eject"
   },
   "lint-staged": {
-    "*.ts": [
+    "*.js": [
       "prettier --write",
       "git add"
     ]

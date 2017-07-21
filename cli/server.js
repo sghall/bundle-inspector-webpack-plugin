@@ -4,7 +4,7 @@ const { VIZ_PATH } = require("./utils");
 const path = require("path");
 const opn = require("opn");
 
-export function launchServer(dataPath, contextPath) {
+module.exports = function launchServer(dataPath, contextPath) {
   openPort.find((err, port) => {
     if (err != null) {
       console.log(err);
@@ -21,4 +21,4 @@ export function launchServer(dataPath, contextPath) {
         opn(`http://localhost:${port}?file=${dataPath}`);
       });
   });
-}
+};
