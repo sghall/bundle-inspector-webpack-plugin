@@ -6,9 +6,6 @@ class Viz extends Component {
   }
 
   render() {
-    const { data } = this.props;
-    console.log(data);
-
     return <canvas ref={d => (this.canvas = d)} />;
   }
 }
