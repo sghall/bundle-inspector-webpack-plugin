@@ -86,7 +86,7 @@ class Graph extends Component {
     forceSimulation()
       .numDimensions(3)
       .nodes(nodes)
-      .force("link", forceLink(links).distance(50).strength(0.25))
+      .force("link", forceLink(links).distance(20).strength(0.95))
       .force("charge", forceManyBody())
       .force("center", forceCenter())
       .on("tick", ticked);

@@ -42,8 +42,12 @@ fetch(toLoadPath)
       }
     }
 
-    nodes.push(data[0]);
-    createNodesAndLinks(data[0].groups, data[0]);
+    console.log(data);
+
+    for (let i = 0; i < data.length; i++) {
+      nodes.push(data[i]);
+      createNodesAndLinks(data[i].groups, data[i]);
+    }
 
     ReactDOM.render(
       <App nodes={nodes} links={links} sizes={sizes} />,
