@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { scaleLinear } from "d3-scale";
+import { interpolateCubehelixLong } from "d3-interpolate";
 import * as THREE from "three";
 import OrbitControls from "../OrbitControls";
 import { select } from "subunit";
@@ -12,23 +13,28 @@ import {
 import colors from "./colors";
 import raycast from "./raycast";
 
+const cubhelix = interpolateCubehelixLong("blue", "red");
+
 class Graph extends Component {
   componentDidMount() {
-    const { canvas, props: { nodes, links, sizes, updateStats } } = this;
+    const { canvas, props: { names, nodes, links, sizes, updateStats } } = this;
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera();
-    camera.position.z = 800;
+    camera.position.z = 1000;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(innerWidth, innerHeight);
-    renderer.setClearColor(0x333333);
+    renderer.setClearColor(0x000000);
 
-    const spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(0, 2000, 0);
+    const aboveSpot = new THREE.SpotLight(0xffffbb);
+    aboveSpot.position.set(0, 1000, 0);
+    scene.add(aboveSpot);
 
-    scene.add(spotLight);
+    const belowSpot = new THREE.SpotLight(0xffffbb);
+    belowSpot.position.set(0, -1000, 0);
+    scene.add(belowSpot);
 
     window.addEventListener("resize", onWindowResize, false);
 
@@ -55,9 +61,13 @@ class Graph extends Component {
         return { x: 0, y: 0, z: 0 };
       })
       .attr("scale", d => {
+        if (!d.path) {
+          return { x: 1, y: 1, z: 1 };
+        }
+
         if (d.groups) {
           const val = nodeScale.range()[0];
-          return { x: val, y: val, z: val };
+          return { x: val / 2, y: val / 2, z: val / 2 };
         } else {
           const val = nodeScale(d.statSize);
           return { x: val, y: val, z: val };
@@ -65,9 +75,17 @@ class Graph extends Component {
       })
       .on("mousemove", updateStats);
 
-    const linkMaterial = new THREE.LineBasicMaterial({
-      color: 0x999999,
-      transparent: true
+    const colorScale = scaleLinear()
+      .range([0.1, 0.9])
+      .domain([0, names.length - 1]);
+
+    const linkColors = {};
+
+    names.forEach((d, i) => {
+      linkColors[d.label] = new THREE.LineBasicMaterial({
+        color: cubhelix(colorScale(i)),
+        transparent: false
+      });
     });
 
     const link = container
@@ -75,7 +93,9 @@ class Graph extends Component {
       .data(links)
       .enter()
       .append("line")
-      .attr("material", linkMaterial)
+      .attr("material", d => {
+        return linkColors[d.chunkName];
+      })
       .attr("geometry", () => {
         const geometry = new THREE.Geometry();
         geometry.vertices = [
@@ -89,13 +109,13 @@ class Graph extends Component {
     forceSimulation()
       .numDimensions(3)
       .nodes(nodes)
-      .force("link", forceLink(links).distance(20).strength(0.95))
-      .force("charge", forceManyBody())
+      .force("link", forceLink(links).distance(20).strength(1.5))
+      .force("charge", forceManyBody().strength(-20))
       .force("center", forceCenter())
       .on("tick", ticked);
 
     function ticked() {
-      node.attr("position", ({ x, y, z }) => {
+      node.attr("position", ({ x = 0, y = 0, z = 0 }) => {
         return { x, y, z };
       });
 

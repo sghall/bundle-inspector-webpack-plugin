@@ -24,12 +24,13 @@ class App extends Component {
   }
 
   render() {
-    const { nodes, links, sizes } = this.props;
+    const { names, nodes, links, sizes } = this.props;
 
     return (
       <div className="App">
         <InfoPanel {...this.state} />
         <Graph
+          names={names}
           nodes={nodes}
           links={links}
           sizes={sizes}

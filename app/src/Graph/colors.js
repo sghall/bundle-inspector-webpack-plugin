@@ -1,48 +1,48 @@
 import * as THREE from "three";
 
 const specular = "#f5f5f5";
-const shininess = 90;
+const shininess = 95;
 
-const redMaterial = new THREE.MeshPhongMaterial({
-  color: "#9a0b20",
-  emissive: "#c7233c",
+const nodeModuleFile = new THREE.MeshPhongMaterial({
+  color: "#555",
+  emissive: "#555",
   specular,
   shininess
 });
 
-const greenMaterial = new THREE.MeshPhongMaterial({
-  color: "#008C9E",
-  emissive: "#005F6B",
+const srFile = new THREE.MeshPhongMaterial({
+  color: "#aaa",
+  emissive: "#aaa",
   specular,
   shininess
 });
 
-const greyMaterial = new THREE.MeshPhongMaterial({
-  color: "#777777",
-  emissive: "#333333",
+const folder = new THREE.MeshPhongMaterial({
+  color: "green",
+  emissive: "green",
   specular,
   shininess
 });
 
-const yellowMaterial = new THREE.MeshPhongMaterial({
-  color: "#999900",
-  emissive: "#999900",
+const bundleRoot = new THREE.MeshPhongMaterial({
+  color: "yellow",
+  emissive: "yellow",
   specular,
   shininess
 });
 
 export default function(d) {
   if (!d.path) {
-    return yellowMaterial;
+    return bundleRoot;
   }
 
   if (d.groups) {
-    return greyMaterial;
+    return folder;
   }
 
-  if (d.path.startsWith("./node_modules")) {
-    return redMaterial;
+  if (d.path.includes("node_modules")) {
+    return nodeModuleFile;
   }
 
-  return greenMaterial;
+  return srFile;
 }

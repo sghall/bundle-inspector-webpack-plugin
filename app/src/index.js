@@ -8,7 +8,6 @@ const fileParam = new URLSearchParams(
 ).get("file");
 
 const toLoadPath = fileParam !== null ? `/${fileParam}` : "/demo";
-console.log(toLoadPath);
 
 fetch(toLoadPath)
   .then(v => v.json())
@@ -16,8 +15,9 @@ fetch(toLoadPath)
     const nodes = [];
     const links = [];
     const sizes = [Infinity, -Infinity];
+    const names = [];
 
-    function createNodesAndLinks(children, parent) {
+    function createNodesAndLinks(children, parent, chunkName) {
       for (let i = 0; i < children.length; i++) {
         const target = children[i];
 
@@ -25,11 +25,12 @@ fetch(toLoadPath)
 
         links.push({
           source: parent,
-          target
+          target,
+          chunkName
         });
 
         if (target.groups) {
-          createNodesAndLinks(target.groups, target);
+          createNodesAndLinks(target.groups, target, chunkName);
         } else {
           if (target.statSize < sizes[0]) {
             sizes[0] = target.statSize;
@@ -42,15 +43,15 @@ fetch(toLoadPath)
       }
     }
 
-    console.log(data);
-
     for (let i = 0; i < data.length; i++) {
-      nodes.push(data[i]);
-      createNodesAndLinks(data[i].groups, data[i]);
+      const chunk = data[i];
+      nodes.push(chunk);
+      names.push({ label: chunk.label, value: true });
+      createNodesAndLinks(chunk.groups, chunk, chunk.label);
     }
 
     ReactDOM.render(
-      <App nodes={nodes} links={links} sizes={sizes} />,
+      <App names={names} nodes={nodes} links={links} sizes={sizes} />,
       document.getElementById("root")
     );
   })

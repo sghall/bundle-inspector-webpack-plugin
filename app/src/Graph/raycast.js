@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import debounce from "lodash.debounce";
+// import debounce from "lodash.debounce";
 
 const raycaster = new THREE.Raycaster();
 
@@ -23,5 +23,5 @@ export default function(camera, items, type) {
     }
   };
 
-  document.addEventListener(type, debounce(listener, 20), false);
+  document.addEventListener(type, listener, false);
 }
