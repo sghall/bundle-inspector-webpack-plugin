@@ -10,11 +10,12 @@ const fileParam = new URLSearchParams(
 const toLoadPath = fileParam !== null ? `/${fileParam}` : "/demo";
 console.log(toLoadPath);
 
-fetch(toLoadPath, { credentials: "include" })
+fetch(toLoadPath)
   .then(v => v.json())
   .then(data => {
     const nodes = [];
     const links = [];
+    const sizes = [Infinity, -Infinity];
 
     function createNodesAndLinks(children, parent) {
       for (let i = 0; i < children.length; i++) {
@@ -29,6 +30,14 @@ fetch(toLoadPath, { credentials: "include" })
 
         if (target.groups) {
           createNodesAndLinks(target.groups, target);
+        } else {
+          if (target.statSize < sizes[0]) {
+            sizes[0] = target.statSize;
+          }
+
+          if (target.statSize > sizes[1]) {
+            sizes[1] = target.statSize;
+          }
         }
       }
     }
@@ -36,10 +45,8 @@ fetch(toLoadPath, { credentials: "include" })
     nodes.push(data[0]);
     createNodesAndLinks(data[0].groups, data[0]);
 
-    console.log(nodes, links);
-
     ReactDOM.render(
-      <App data={data} nodes={nodes} links={links} />,
+      <App data={data} nodes={nodes} links={links} sizes={sizes} />,
       document.getElementById("root")
     );
   })

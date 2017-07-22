@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { scaleLinear } from "d3-scale";
 import * as THREE from "three";
 import { select } from "subunit";
 import {
@@ -11,7 +12,7 @@ import colors from "./colors";
 
 class Graph extends Component {
   componentDidMount() {
-    const { canvas, props: { nodes, links } } = this;
+    const { canvas, props: { nodes, links, sizes } } = this;
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
@@ -35,18 +36,11 @@ class Graph extends Component {
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    forceSimulation()
-      .numDimensions(3)
-      .nodes(nodes)
-      .force("link", forceLink(links).distance(50).strength(0.25))
-      .force("charge", forceManyBody())
-      .force("center", forceCenter())
-      .on("tick", ticked);
-
     const rootNode = select(scene);
     const container = rootNode.append("object");
 
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
+    const nodeScale = scaleLinear().range([0.5, 2.25]).domain(sizes);
 
     const node = container
       .selectAll("node")
@@ -57,10 +51,18 @@ class Graph extends Component {
       .attr("material", colors)
       .attr("position", () => {
         return { x: 0, y: 0, z: 0 };
+      })
+      .attr("scale", d => {
+        if (d.groups) {
+          return { x: 1, y: 1, z: 1 };
+        } else {
+          const val = nodeScale(d.statSize);
+          return { x: val, y: val, z: val };
+        }
       });
 
     const linkMaterial = new THREE.LineBasicMaterial({
-      color: 0xf5f5f5,
+      color: 0xaaaaaa,
       transparent: true
     });
 
@@ -79,6 +81,14 @@ class Graph extends Component {
 
         return geometry;
       });
+
+    forceSimulation()
+      .numDimensions(3)
+      .nodes(nodes)
+      .force("link", forceLink(links).distance(50).strength(0.25))
+      .force("charge", forceManyBody())
+      .force("center", forceCenter())
+      .on("tick", ticked);
 
     function ticked() {
       node.attr("position", ({ x, y, z }) => {
