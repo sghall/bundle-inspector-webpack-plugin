@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "d3-force-3d": "^1.0.7",
+    "d3-interpolate": "^1.1.5",
     "d3-scale": "^1.0.6",
+    "fast-memoize": "^2.2.7",
     "lodash.debounce": "^4.0.8",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
