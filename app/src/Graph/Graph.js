@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { scaleLinear } from "d3-scale";
 import * as THREE from "three";
+import OrbitControls from "../OrbitControls";
 import { select } from "subunit";
 import {
   forceSimulation,
@@ -62,7 +63,7 @@ class Graph extends Component {
       });
 
     const linkMaterial = new THREE.LineBasicMaterial({
-      color: 0xaaaaaa,
+      color: 0x999999,
       transparent: true
     });
 
@@ -106,10 +107,12 @@ class Graph extends Component {
       });
     }
 
+    const control = new OrbitControls(camera, canvas);
+
     const theta = 0.01;
 
     function animate() {
-      rootNode.node().rotation.y += theta;
+      control.update();
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     }
