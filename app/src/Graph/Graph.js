@@ -10,10 +10,11 @@ import {
   forceCenter
 } from "d3-force-3d";
 import colors from "./colors";
+import raycast from "./raycast";
 
 class Graph extends Component {
   componentDidMount() {
-    const { canvas, props: { nodes, links, sizes } } = this;
+    const { canvas, props: { nodes, links, sizes, updateStats } } = this;
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
@@ -55,12 +56,14 @@ class Graph extends Component {
       })
       .attr("scale", d => {
         if (d.groups) {
-          return { x: 1, y: 1, z: 1 };
+          const val = nodeScale.range()[0];
+          return { x: val, y: val, z: val };
         } else {
           const val = nodeScale(d.statSize);
           return { x: val, y: val, z: val };
         }
-      });
+      })
+      .on("mousemove", updateStats);
 
     const linkMaterial = new THREE.LineBasicMaterial({
       color: 0x999999,
@@ -108,6 +111,7 @@ class Graph extends Component {
     }
 
     const control = new OrbitControls(camera, canvas);
+    raycast(camera, node.nodes(), "mousemove");
 
     function animate() {
       control.update();
