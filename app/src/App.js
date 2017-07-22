@@ -3,7 +3,7 @@ import Graph from "./Graph";
 
 class App extends Component {
   render() {
-    const { data, nodes, links, sizes } = this.props;
+    const { nodes, links, sizes } = this.props;
 
     return (
       <div className="App">

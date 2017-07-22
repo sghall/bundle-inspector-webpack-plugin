@@ -46,7 +46,7 @@ fetch(toLoadPath)
     createNodesAndLinks(data[0].groups, data[0]);
 
     ReactDOM.render(
-      <App data={data} nodes={nodes} links={links} sizes={sizes} />,
+      <App nodes={nodes} links={links} sizes={sizes} />,
       document.getElementById("root")
     );
   })

@@ -519,6 +519,9 @@ const OrbitControls = function(object, domElement) {
         pan(-scope.keyPanSpeed, 0);
         scope.update();
         break;
+
+      default:
+        break;
     }
   }
 
@@ -646,6 +649,9 @@ const OrbitControls = function(object, domElement) {
         state = STATE.PAN;
 
         break;
+
+      default:
+        break;
     }
 
     if (state !== STATE.NONE) {
@@ -681,6 +687,9 @@ const OrbitControls = function(object, domElement) {
 
         handleMouseMovePan(event);
 
+        break;
+
+      default:
         break;
     }
   }

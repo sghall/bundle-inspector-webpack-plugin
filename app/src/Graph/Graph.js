@@ -109,8 +109,6 @@ class Graph extends Component {
 
     const control = new OrbitControls(camera, canvas);
 
-    const theta = 0.01;
-
     function animate() {
       control.update();
       requestAnimationFrame(animate);

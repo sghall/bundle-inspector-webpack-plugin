@@ -1,12 +1,4 @@
-import React, { Component } from "react";
 import * as THREE from "three";
-import { select } from "subunit";
-import {
-  forceSimulation,
-  forceManyBody,
-  forceLink,
-  forceCenter
-} from "d3-force-3d";
 
 const specular = "#f5f5f5";
 const shininess = 90;
