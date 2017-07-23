@@ -1,3 +1,20 @@
+import { scaleLinear } from "d3-scale";
+import { interpolateCubehelixLong } from "d3-interpolate";
+
+const cubhelix = interpolateCubehelixLong("blue", "red");
+
+export function chunkColors(data) {
+  const scale = scaleLinear().range([0.1, 0.9]).domain([0, data.length - 1]);
+
+  const colors = {};
+
+  data.forEach((d, i) => {
+    colors[d.label] = cubhelix(scale(i));
+  });
+
+  return chunkName => colors[chunkName];
+}
+
 function createNode(data) {
   return {
     label: data.label || "(root)",
@@ -22,9 +39,9 @@ export function formatBytes(bytes, decimals) {
     return "";
   }
 
-  const value = `${parseFloat((Math.abs(bytes) / k ** i).toFixed(dm))}  ${sizes[
-    i
-  ]}`;
+  const value = `${parseFloat(
+    Math.pow(Math.abs(bytes) / k, i).toFixed(dm)
+  )}  ${sizes[i]}`;
 
   if (isNegative) {
     return `-${value}`;

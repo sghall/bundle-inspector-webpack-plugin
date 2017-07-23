@@ -5,26 +5,6 @@ import InfoPanel from "./InfoPanel";
 import Treemap from "./Treemap";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      label: "",
-      path: "",
-      size: ""
-    };
-
-    this.updateStats = this.updateStats.bind(this);
-  }
-
-  updateStats(e, node) {
-    // this.setState(() => ({
-    //   label: node.label || "",
-    //   path: node.path || "{bundle root}",
-    //   size: node.statSize || ""
-    // }));
-  }
-
   render() {
     const { file, data, names, nodes, links, sizes } = this.props;
 
