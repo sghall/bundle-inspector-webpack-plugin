@@ -1,3 +1,4 @@
+
 #chart {
   width: 960px;
   height: 500px;
@@ -5,6 +6,7 @@
 }
 
 text {
+  font-size: 10px;
   pointer-events: none;
 }
 
@@ -13,7 +15,7 @@ text {
 }
 
 rect {
-  fill: none;
+  fill: rgba(0,0,0,0.05);
   stroke: #fff;
 }
 

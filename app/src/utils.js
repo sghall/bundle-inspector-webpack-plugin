@@ -1,6 +1,6 @@
 function createNode(data) {
   return {
-    label: data.label || "",
+    label: data.label || "(root)",
     value: data.statSize || 0,
     path: data.path || "(root)"
   };
@@ -69,12 +69,20 @@ export function createTree(data) {
     }
   }
 
-  const tree = { children: [] };
+  let tree;
 
-  for (let i = 0; i < data.length; i++) {
-    const chunk = createNode(data[i]);
-    tree.children.push(chunk);
-    add(data[i].groups, chunk);
+  if (data.length === 1) {
+    tree = createNode(data[0]);
+    add(data[0].groups, tree);
+  } else {
+    tree = createNode(data);
+    tree.children = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const chunk = createNode(data[i]);
+      tree.children.push(chunk);
+      add(data[i].groups, chunk);
+    }
   }
 
   return tree;

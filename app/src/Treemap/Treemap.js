@@ -1,69 +1,55 @@
 import React, { Component } from "react";
-// import { format } from "d3-format";
-// import { scaleLinear } from "d3-scale";
-// import { treemap, hierarchy } from "d3-hierarchy";
-// import { select } from "d3-selection";
 import * as d3 from "d3";
-import flare from "./flare.json";
 import "./treemap.css";
 
 class Treemap extends Component {
   componentDidMount() {
     const { container, props: { data } } = this;
 
-    const margin = { top: 20, right: 0, bottom: 0, left: 0 };
-    const width = 960;
-    const height = 500 - margin.top - margin.bottom;
     const formatNumber = d3.format(",d");
+
+    const view = [960, 500];
+    const trbl = [20, 0, 0, 0];
+    const dims = [view[0] - trbl[1] - trbl[3], view[1] - trbl[0] - trbl[2]];
 
     let transitioning;
 
-    const x = d3.scaleLinear().domain([0, width]).range([0, width]);
-    const y = d3.scaleLinear().domain([0, height]).range([0, height]);
+    const x = d3.scaleLinear().domain([0, dims[0]]).range([0, dims[0]]);
+    const y = d3.scaleLinear().domain([0, dims[1]]).range([0, dims[1]]);
 
     var tree = d3.treemap().round(false);
 
     var svg = d3
       .select(container)
       .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.bottom + margin.top)
-      .style("margin-left", -margin.left + "px")
-      .style("margin.right", -margin.right + "px")
+      .attr("width", view[0])
+      .attr("height", view[1])
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("transform", "translate(" + trbl[3] + "," + trbl[0] + ")")
       .style("shape-rendering", "crispEdges");
 
     var grandparent = svg.append("g").attr("class", "grandparent");
 
     grandparent
       .append("rect")
-      .attr("y", -margin.top)
-      .attr("width", width)
-      .attr("height", margin.top);
+      .attr("y", -trbl[0])
+      .attr("width", dims[0])
+      .attr("height", trbl[0]);
 
     grandparent
       .append("text")
       .attr("x", 6)
-      .attr("y", 6 - margin.top)
+      .attr("y", 6 - trbl[0])
       .attr("dy", ".75em");
 
-    // const tree = hierarchy(data);
-
-    // initialize(root);
-    // setChildren(data);
-    // // display(data);
-    // const nodes = hierarchy(data).sum(d => d.value);
-    // console.log(tree(hierarchy({ children: data.children }).sum(d => d.value)));
-
-    initialize(flare);
-    layout(flare);
-    display(flare);
+    initialize(data);
+    layout(data);
+    display(data);
 
     function initialize(d) {
       d.x = d.y = 0;
-      d.dx = width;
-      d.dy = height;
+      d.dx = dims[0];
+      d.dy = dims[1];
       d.depth = 0;
     }
 
@@ -91,8 +77,6 @@ class Treemap extends Component {
         });
       }
     }
-
-    console.log(flare);
 
     function display(d) {
       grandparent
@@ -134,7 +118,11 @@ class Treemap extends Component {
         .append("text")
         .attr("dy", ".75em")
         .text(function(d) {
-          return d.name;
+          if (x(d.x + d.dx) - x(d.x) > 20 && y(d.y + d.dy) - y(d.y) > 5) {
+            return d.label;
+          }
+
+          return "";
         })
         .call(text);
 
@@ -142,9 +130,9 @@ class Treemap extends Component {
         if (transitioning || !d) return;
         transitioning = true;
 
-        var g2 = display(d),
-          t1 = g1.transition().duration(750),
-          t2 = g2.transition().duration(750);
+        const g2 = display(d);
+        const t1 = g1.transition().duration(750);
+        const t2 = g2.transition().duration(750);
 
         x.domain([d.x, d.x + d.dx]);
         y.domain([d.y, d.y + d.dy]);
@@ -198,7 +186,7 @@ class Treemap extends Component {
     }
 
     function name(d) {
-      return d.parent ? name(d.parent) + "." + d.name : d.name;
+      return d.parent ? name(d.parent) + "/" + d.label : d.label;
     }
   }
 
