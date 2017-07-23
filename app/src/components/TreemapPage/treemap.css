@@ -1,26 +1,15 @@
 
-#chart {
-  width: 960px;
-  height: 500px;
-  background: #ddd;
-}
-
 text {
-  fill: white;
+  fill: #fff;
   font-size: 10px;
   pointer-events: none;
 }
 
-/*.grandparent text {
-  font-weight: bold;
-}*/
-
 rect {
-  stroke: #fff;
+  stroke: #aaa;
 }
 
-rect.parent,
-.grandparent rect {
+rect.parent, .grandparent rect {
   stroke-width: 2px;
 }
 
@@ -28,12 +17,7 @@ rect.parent,
   fill: #000;
 }
 
-/*.grandparent:hover rect {
-  fill: #333;
-}*/
-
-.children rect.parent,
-.grandparent rect {
+.children rect.parent, .grandparent rect {
   cursor: pointer;
 }
 

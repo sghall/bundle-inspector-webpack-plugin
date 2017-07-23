@@ -21,7 +21,7 @@ const TopNav = ({ file, total }) =>
         <div className="button is-black">Treemap</div>
       </Link>
       <div className="navbar-item">
-        <h3 class="title is-3">{`Total: ${formatBytes(total)}`}</h3>
+        <h3 className="title is-3">{`Total: ${formatBytes(total)}`}</h3>
       </div>
     </div>
   </nav>;
