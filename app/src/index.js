@@ -9,10 +9,10 @@ const file = new URLSearchParams((window.location.search || "").slice(1)).get(
   "file"
 );
 
-const toLoadPath = file !== null ? `/${file}` : "/demo";
+const path = file !== null ? `/${file}` : "/demo";
 
-fetch(toLoadPath)
-  .then(v => v.json())
+fetch(path)
+  .then(d => d.json())
   .then(data => {
     ReactDOM.render(
       <App
@@ -24,5 +24,5 @@ fetch(toLoadPath)
     );
   })
   .catch(e => {
-    document.body.textContent = `Error fetching data from ${toLoadPath}, ${e}`;
+    document.body.textContent = `Error fetching data from ${path}, ${e}`;
   });
