@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { format } from "d3-format";
-import { scaleLinear } from "d3-scale";
-import { treemap, hierarchy } from "d3-hierarchy";
-import { select } from "d3-selection";
+// import { format } from "d3-format";
+// import { scaleLinear } from "d3-scale";
+// import { treemap, hierarchy } from "d3-hierarchy";
+// import { select } from "d3-selection";
+import * as d3 from "d3";
 import flare from "./flare.json";
 import "./treemap.css";
 
@@ -13,19 +14,17 @@ class Treemap extends Component {
     const margin = { top: 20, right: 0, bottom: 0, left: 0 };
     const width = 960;
     const height = 500 - margin.top - margin.bottom;
-    const formatNumber = format(",d");
+    const formatNumber = d3.format(",d");
 
     let transitioning;
 
-    const x = scaleLinear().domain([0, width]).range([0, width]);
-    const y = scaleLinear().domain([0, height]).range([0, height]);
+    const x = d3.scaleLinear().domain([0, width]).range([0, width]);
+    const y = d3.scaleLinear().domain([0, height]).range([0, height]);
 
-    const tree = treemap().padding(1).round(false);
+    var tree = d3.treemap().round(false);
 
-    // const root = hierarchy(data).sum(d => d.value);
-    // console.log("root!!!", root);
-
-    var svg = select(container)
+    var svg = d3
+      .select(container)
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.bottom + margin.top)
@@ -59,6 +58,7 @@ class Treemap extends Component {
 
     initialize(flare);
     layout(flare);
+    display(flare);
 
     function initialize(d) {
       d.x = d.y = 0;
@@ -70,9 +70,8 @@ class Treemap extends Component {
     function layout(d) {
       if (d.children) {
         const x = { children: d.children };
-        const h = hierarchy(x, n => {
-          return n === x ? n.children : null;
-        })
+        const h = d3
+          .hierarchy(x, n => n.children || null)
           .sum(d => d.value)
           .sort((a, b) => {
             return a.value - b.value;
@@ -94,112 +93,113 @@ class Treemap extends Component {
     }
 
     console.log(flare);
-    // function display(d) {
-    //   grandparent
-    //     .datum(d.parent)
-    //     .on("click", transition)
-    //     .select("text")
-    //     .text(name(d));
 
-    //   var g1 = svg.insert("g", ".grandparent").datum(d).attr("class", "depth");
-    //   var g = g1.selectAll("g").data(d._children).enter().append("g");
+    function display(d) {
+      grandparent
+        .datum(d.parent)
+        .on("click", transition)
+        .select("text")
+        .text(name(d));
 
-    //   g
-    //     .filter(function(d) {
-    //       return d._children;
-    //     })
-    //     .classed("children", true)
-    //     .on("click", transition);
+      var g1 = svg.insert("g", ".grandparent").datum(d).attr("class", "depth");
+      var g = g1.selectAll("g").data(d.children).enter().append("g");
 
-    //   g
-    //     .selectAll(".child")
-    //     .data(function(d) {
-    //       return d._children || [d];
-    //     })
-    //     .enter()
-    //     .append("rect")
-    //     .attr("class", "child")
-    //     .call(rect);
+      g
+        .filter(function(d) {
+          return d.children;
+        })
+        .classed("children", true)
+        .on("click", transition);
 
-    //   g
-    //     .append("rect")
-    //     .attr("class", "parent")
-    //     .call(rect)
-    //     .append("title")
-    //     .text(function(d) {
-    //       return formatNumber(d.value);
-    //     });
+      g
+        .selectAll(".child")
+        .data(function(d) {
+          return d.children || [d];
+        })
+        .enter()
+        .append("rect")
+        .attr("class", "child")
+        .call(rect);
 
-    //   g
-    //     .append("text")
-    //     .attr("dy", ".75em")
-    //     .text(function(d) {
-    //       return d.name;
-    //     })
-    //     .call(text);
+      g
+        .append("rect")
+        .attr("class", "parent")
+        .call(rect)
+        .append("title")
+        .text(function(d) {
+          return formatNumber(d.value);
+        });
 
-    //   function transition(d) {
-    //     if (transitioning || !d) return;
-    //     transitioning = true;
+      g
+        .append("text")
+        .attr("dy", ".75em")
+        .text(function(d) {
+          return d.name;
+        })
+        .call(text);
 
-    //     var g2 = display(d),
-    //       t1 = g1.transition().duration(750),
-    //       t2 = g2.transition().duration(750);
+      function transition(d) {
+        if (transitioning || !d) return;
+        transitioning = true;
 
-    //     x.domain([d.x, d.x + d.dx]);
-    //     y.domain([d.y, d.y + d.dy]);
+        var g2 = display(d),
+          t1 = g1.transition().duration(750),
+          t2 = g2.transition().duration(750);
 
-    //     svg.style("shape-rendering", null);
+        x.domain([d.x, d.x + d.dx]);
+        y.domain([d.y, d.y + d.dy]);
 
-    //     svg.selectAll(".depth").sort(function(a, b) {
-    //       return a.depth - b.depth;
-    //     });
+        svg.style("shape-rendering", null);
 
-    //     g2.selectAll("text").style("fill-opacity", 0);
+        svg.selectAll(".depth").sort(function(a, b) {
+          return a.depth - b.depth;
+        });
 
-    //     t1.selectAll("text").call(text).style("fill-opacity", 0);
-    //     t2.selectAll("text").call(text).style("fill-opacity", 1);
-    //     t1.selectAll("rect").call(rect);
-    //     t2.selectAll("rect").call(rect);
+        g2.selectAll("text").style("fill-opacity", 0);
 
-    //     t1.remove().each("end", function() {
-    //       svg.style("shape-rendering", "crispEdges");
-    //       transitioning = false;
-    //     });
-    //   }
+        t1.selectAll("text").call(text).style("fill-opacity", 0);
+        t2.selectAll("text").call(text).style("fill-opacity", 1);
+        t1.selectAll("rect").call(rect);
+        t2.selectAll("rect").call(rect);
 
-    //   return g;
-    // }
+        t1.remove().each(function() {
+          svg.style("shape-rendering", "crispEdges");
+          transitioning = false;
+        });
+      }
 
-    // function text(text) {
-    //   text
-    //     .attr("x", function(d) {
-    //       return x(d.x) + 6;
-    //     })
-    //     .attr("y", function(d) {
-    //       return y(d.y) + 6;
-    //     });
-    // }
+      return g;
+    }
 
-    // function rect(rect) {
-    //   rect
-    //     .attr("x", function(d) {
-    //       return x(d.x);
-    //     })
-    //     .attr("y", function(d) {
-    //       return y(d.y);
-    //     })
-    //     .attr("width", function(d) {
-    //       return x(d.x + d.dx) - x(d.x);
-    //     })
-    //     .attr("height", function(d) {
-    //       return y(d.y + d.dy) - y(d.y);
-    //     });
-    // }
+    function text(text) {
+      text
+        .attr("x", function(d) {
+          return x(d.x) + 6;
+        })
+        .attr("y", function(d) {
+          return y(d.y) + 6;
+        });
+    }
 
-    // function name(d) {
-    //   return d.parent ? name(d.parent) + "." + d.name : d.name;
-    // }
+    function rect(rect) {
+      rect
+        .attr("x", function(d) {
+          return x(d.x);
+        })
+        .attr("y", function(d) {
+          return y(d.y);
+        })
+        .attr("width", function(d) {
+          return x(d.x + d.dx) - x(d.x);
+        })
+        .attr("height", function(d) {
+          return y(d.y + d.dy) - y(d.y);
+        });
+    }
+
+    function name(d) {
+      return d.parent ? name(d.parent) + "." + d.name : d.name;
+    }
   }
 
   render() {

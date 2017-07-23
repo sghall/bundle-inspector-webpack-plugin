@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3": "^4.10.0",
     "d3-force-3d": "^1.0.7",
     "d3-format": "^1.2.0",
     "d3-hierarchy": "^1.1.5",
