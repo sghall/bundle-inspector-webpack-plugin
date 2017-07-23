@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { format } from "d3-format";
 import { scaleLinear } from "d3-scale";
-import { treemap } from "d3-hierarchy";
+import { treemap, hierarchy } from "d3-hierarchy";
 import { select } from "d3-selection";
 import "./treemap.css";
 
@@ -22,14 +22,8 @@ class Treemap extends Component {
 
     const tree = treemap().size([width, height]).padding(1).round(true);
 
-    // .children(function(d, depth) {
-    //   return depth ? null : d._children;
-    // })
-    // .sort(function(a, b) {
-    //   return a.value - b.value;
-    // })
-    // .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-    // .round(false);
+    // const root = hierarchy(data).sum(d => d.value);
+    // console.log("root!!!", root);
 
     var svg = select(container)
       .append("svg")
@@ -55,40 +49,43 @@ class Treemap extends Component {
       .attr("y", 6 - margin.top)
       .attr("dy", ".75em");
 
-    initialize(data);
-    // accumulate(data);
-    // layout(data);
-    // display(data);
+    // const tree = hierarchy(data);
 
-    function initialize(root) {
-      root.x = root.y = 0;
-      root.dx = width;
-      root.dy = height;
-      root.depth = 0;
+    // initialize(root);
+    // setChildren(data);
+    // // display(data);
+    // const nodes = hierarchy(data).sum(d => d.value);
+    // console.log(tree(hierarchy({ children: data.children }).sum(d => d.value)));
+
+    initialize(data);
+    layout(data);
+
+    function initialize(d) {
+      d.x = d.y = 0;
+      d.dx = width;
+      d.dy = height;
+      d.depth = 0;
     }
 
-    // function accumulate(d) {
-    //   return (d._children = d.children)
-    //     ? (d.value = d.children.reduce(function(p, v) {
-    //         return p + accumulate(v);
-    //       }, 0))
-    //     : d.value;
-    // }
+    function layout(d) {
+      if (d.children) {
+        const h = hierarchy({ children: d.children }).sum(d => d.value);
+        tree(h);
 
-    // function layout(d) {
-    //   if (d._children) {
-    //     treemap.nodes({ _children: d._children });
-    //     d._children.forEach(function(c) {
-    //       c.x = d.x + c.x * d.dx;
-    //       c.y = d.y + c.y * d.dy;
-    //       c.dx *= d.dx;
-    //       c.dy *= d.dy;
-    //       c.parent = d;
-    //       layout(c);
-    //     });
-    //   }
-    // }
+        h.children.forEach(function(c) {
+          c.data.x = d.x + c.x0 * d.dx;
+          c.data.y = d.y + c.y0 * d.dy;
+          c.data.dx = c.x1 - c.x0;
+          c.data.dy = c.y1 - c.y0;
+          c.data.dx *= d.dx;
+          c.data.dy *= d.dy;
+          c.data.parent = d;
+          layout(c.data);
+        });
+      }
+    }
 
+    console.log(data);
     // function display(d) {
     //   grandparent
     //     .datum(d.parent)
@@ -97,7 +94,6 @@ class Treemap extends Component {
     //     .text(name(d));
 
     //   var g1 = svg.insert("g", ".grandparent").datum(d).attr("class", "depth");
-
     //   var g = g1.selectAll("g").data(d._children).enter().append("g");
 
     //   g

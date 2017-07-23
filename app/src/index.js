@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { createNodesAndLinks } from "./utils";
+import { createNodesAndLinks, createTree } from "./utils";
 
 const fileParam = new URLSearchParams(
   (window.location.search || "").slice(1)
@@ -14,7 +14,7 @@ fetch(toLoadPath)
   .then(v => v.json())
   .then(data => {
     ReactDOM.render(
-      <App data={data} {...createNodesAndLinks(data)} />,
+      <App data={createTree(data)} {...createNodesAndLinks(data)} />,
       document.getElementById("root")
     );
   })
