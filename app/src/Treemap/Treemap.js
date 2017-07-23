@@ -103,14 +103,22 @@ class Treemap extends Component {
         .call(rect);
 
       g
+        .append("rect")
+        .attr("id", d => `node-${d.label.replace(/\W+/g, "-")}`)
+        .call(rect);
+
+      g
+        .append("clipPath")
+        .attr("id", d => `clip-${d.label.replace(/\W+/g, "-")}`)
+        .append("use")
+        .attr("xlink:href", d => `#node-${d.label.replace(/\W+/g, "-")}`);
+
+      g
         .append("text")
+        .attr("clip-path", d => `url(#clip-${d.label.replace(/\W+/g, "-")})`)
         .attr("dy", ".75em")
         .text(function(d) {
-          if (x(d.x + d.dx) - x(d.x) > 20 && y(d.y + d.dy) - y(d.y) > 5) {
-            return `${d.label} (${formatBytes(d.value)})`;
-          }
-
-          return "";
+          return `${d.label} (${formatBytes(d.value)})`;
         })
         .call(text);
 
