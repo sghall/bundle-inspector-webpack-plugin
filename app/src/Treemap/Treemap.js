@@ -3,8 +3,6 @@ import * as d3 from "d3";
 import { formatBytes } from "../utils";
 import "./treemap.css";
 
-const formatNumber = d3.format(",d");
-
 class Treemap extends Component {
   componentDidMount() {
     const { container, props: { data } } = this;
