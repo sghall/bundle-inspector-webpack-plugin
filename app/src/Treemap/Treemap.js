@@ -2,33 +2,29 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import "./treemap.css";
 
+const formatNumber = d3.format(",d");
+
 class Treemap extends Component {
   componentDidMount() {
     const { container, props: { data } } = this;
-
-    const formatNumber = d3.format(",d");
-
     const view = [960, 500];
     const trbl = [20, 0, 0, 0];
     const dims = [view[0] - trbl[1] - trbl[3], view[1] - trbl[0] - trbl[2]];
 
-    let transitioning;
-
     const x = d3.scaleLinear().domain([0, dims[0]]).range([0, dims[0]]);
     const y = d3.scaleLinear().domain([0, dims[1]]).range([0, dims[1]]);
 
-    var tree = d3.treemap().round(false);
+    const tree = d3.treemap().round(false);
 
-    var svg = d3
+    const svg = d3
       .select(container)
       .append("svg")
-      .attr("width", view[0])
-      .attr("height", view[1])
+      .attr("viewBox", `0 0 ${view[0]} ${view[1]}`)
       .append("g")
-      .attr("transform", "translate(" + trbl[3] + "," + trbl[0] + ")")
+      .attr("transform", `translate(${trbl[3]},${trbl[0]})`)
       .style("shape-rendering", "crispEdges");
 
-    var grandparent = svg.append("g").attr("class", "grandparent");
+    const grandparent = svg.append("g").attr("class", "grandparent");
 
     grandparent
       .append("rect")
@@ -125,6 +121,8 @@ class Treemap extends Component {
           return "";
         })
         .call(text);
+
+      let transitioning;
 
       function transition(d) {
         if (transitioning || !d) return;
