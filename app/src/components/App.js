@@ -11,7 +11,7 @@ const App = ({ file, data }) => {
   return (
     <Router>
       <div>
-        <TopNav file={file} />
+        <TopNav file={file} total={data.reduce((m, n) => m + n.statSize, 0)} />
         <Route
           exact
           path="/"
