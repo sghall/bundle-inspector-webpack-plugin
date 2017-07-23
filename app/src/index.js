@@ -5,17 +5,21 @@ import "./index.css";
 import App from "./App";
 import { createNodesAndLinks, createTree } from "./utils";
 
-const fileParam = new URLSearchParams(
-  (window.location.search || "").slice(1)
-).get("file");
+const file = new URLSearchParams((window.location.search || "").slice(1)).get(
+  "file"
+);
 
-const toLoadPath = fileParam !== null ? `/${fileParam}` : "/demo";
+const toLoadPath = file !== null ? `/${file}` : "/demo";
 
 fetch(toLoadPath)
   .then(v => v.json())
   .then(data => {
     ReactDOM.render(
-      <App data={createTree(data)} {...createNodesAndLinks(data)} />,
+      <App
+        file={file}
+        data={createTree(data)}
+        {...createNodesAndLinks(data)}
+      />,
       document.getElementById("root")
     );
   })

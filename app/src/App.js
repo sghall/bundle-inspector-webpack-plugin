@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Graph from "./Graph";
 import InfoPanel from "./InfoPanel";
-// import Treemap from "./Treemap";
+import Treemap from "./Treemap";
 
 class App extends Component {
   constructor(props) {
@@ -18,88 +18,47 @@ class App extends Component {
   }
 
   updateStats(e, node) {
-    this.setState(() => ({
-      label: node.label || "",
-      path: node.path || "{bundle root}",
-      size: node.statSize || ""
-    }));
+    // this.setState(() => ({
+    //   label: node.label || "",
+    //   path: node.path || "{bundle root}",
+    //   size: node.statSize || ""
+    // }));
   }
 
   render() {
-    const { names, nodes, links, sizes } = this.props;
+    const { file, data, names, nodes, links, sizes } = this.props;
 
     return (
-      <div className="App">
-        <nav className="navbar">
-          <div className="navbar-brand">
-            <div className="navbar-item">Analyzer 3D Webpack Plugin</div>
-          </div>
-          <div className="navbar-end">
-            <a className="navbar-item" href="https://github.com/jgthms/bulma">
-              Github
-            </a>
-            <a className="navbar-item" href="https://twitter.com/jgthms">
-              Twitter
-            </a>
-          </div>
-        </nav>
-        <Router>
-          <div>
-            <Route
-              exact
-              path="/"
-              component={props =>
-                <Graph
-                  names={names}
-                  nodes={nodes}
-                  links={links}
-                  sizes={sizes}
-                  updateStats={this.updateStats}
-                />}
-            />
-            <Route
-              path="/:id/:hover?"
-              component={props =>
-                <Graph
-                  names={names}
-                  nodes={nodes}
-                  links={links}
-                  sizes={sizes}
-                  updateStats={this.updateStats}
-                />}
-            />
-          </div>
-        </Router>
-      </div>
+      <Router>
+        <div>
+          <nav className="navbar">
+            <div className="navbar-brand">
+              <div className="navbar-item">Analyzer 3D Webpack Plugin</div>
+              <Link className="navbar-item" to={`/?file=${file}`}>
+                <div className="button is-black">3D Graph</div>
+              </Link>
+              <Link className="navbar-item" to={`/treemap?file=${file}`}>
+                <div className="button is-black">Treemap</div>
+              </Link>
+            </div>
+          </nav>
+          <Route
+            exact
+            path="/"
+            component={props =>
+              <Graph
+                names={names}
+                nodes={nodes}
+                links={links}
+                sizes={sizes}
+                updateStats={this.updateStats}
+              />}
+          />
+          <Route path="/treemap" component={props => <Treemap data={data} />} />
+        </div>
+      </Router>
     );
   }
 }
-
-// render() {
-//   const { data } = this.props;
-
-//   return (
-//     <div className="App">
-//       <Treemap data={data} />
-//     </div>
-//   );
-// }
-
-// render() {
-//   const { names, nodes, links, sizes } = this.props;
-
-//   return (
-//     <div className="App">
-//       <InfoPanel {...this.state} />
-//       <Graph
-//         names={names}
-//         nodes={nodes}
-//         links={links}
-//         sizes={sizes}
-//         updateStats={this.updateStats}
-//       />
-//     </div>
-//   );
-// }
 
 export default App;
