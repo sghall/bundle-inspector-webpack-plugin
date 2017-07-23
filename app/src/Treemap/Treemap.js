@@ -107,7 +107,10 @@ class Treemap extends Component {
         .attr("dy", ".75em")
         .text(function(d) {
           if (x(d.x + d.dx) - x(d.x) > 20 && y(d.y + d.dy) - y(d.y) > 5) {
-            return `${d.label} (${formatBytes(d.value)})`;
+            return `${d.label} (${formatBytes(d.value)})`.substring(
+              0,
+              d.dx / 5
+            );
           }
 
           return "";
