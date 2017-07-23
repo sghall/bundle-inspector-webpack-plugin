@@ -1,3 +1,10 @@
+const createNode = d => ({
+  name: d.label || "(root)",
+  path: d.path || "(root)",
+  size: d.statSize || 0,
+  hasChildren: !!d.groups
+});
+
 export default function processData(data) {
   const nodes = [];
   const links = [];
@@ -5,7 +12,7 @@ export default function processData(data) {
 
   function add(children, parent, chunkName) {
     for (let i = 0; i < children.length; i++) {
-      const target = children[i];
+      const target = createNode(children[i]);
 
       nodes.push(target);
 
@@ -15,24 +22,24 @@ export default function processData(data) {
         chunkName
       });
 
-      if (target.groups) {
-        add(target.groups, target, chunkName);
+      if (children[i].groups) {
+        add(children[i].groups, target, chunkName);
       } else {
-        if (target.statSize < sizes[0]) {
-          sizes[0] = target.statSize;
+        if (target.size < sizes[0]) {
+          sizes[0] = target.size;
         }
 
-        if (target.statSize > sizes[1]) {
-          sizes[1] = target.statSize;
+        if (target.size > sizes[1]) {
+          sizes[1] = target.size;
         }
       }
     }
   }
 
   for (let i = 0; i < data.length; i++) {
-    const chunk = data[i];
+    const chunk = createNode(data[i]);
     nodes.push(chunk);
-    add(chunk.groups, chunk, chunk.label);
+    add(data[i].groups, chunk, chunk.name);
   }
 
   return {

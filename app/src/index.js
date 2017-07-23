@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "bulma/css/bulma.css";
 import "./index.css";
-import App from "./App";
+import App from "./components/App";
 
 const file = new URLSearchParams((window.location.search || "").slice(1)).get(
   "file"

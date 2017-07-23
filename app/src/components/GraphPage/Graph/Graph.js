@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { scaleLinear } from "d3-scale";
-import { interpolateCubehelixLong } from "d3-interpolate";
 import * as THREE from "three";
 import OrbitControls from "../OrbitControls";
 import { select } from "subunit";
@@ -10,11 +9,9 @@ import {
   forceLink,
   forceCenter
 } from "d3-force-3d";
-import materials from "./materials";
 import raycast from "./raycast";
+import materials from "./materials";
 import processData from "./processData";
-
-const cubhelix = interpolateCubehelixLong("blue", "red");
 
 class Graph extends Component {
   componentDidMount() {
@@ -64,29 +61,25 @@ class Graph extends Component {
         return { x: 0, y: 0, z: 0 };
       })
       .attr("scale", d => {
-        if (!d.path) {
+        if (d.path === "(root)") {
           return { x: 1, y: 1, z: 1 };
         }
 
-        if (d.groups) {
+        if (d.hasChildren) {
           const val = nodeScale.range()[0];
           return { x: val / 2, y: val / 2, z: val / 2 };
         } else {
-          const val = nodeScale(d.statSize);
+          const val = nodeScale(d.size);
           return { x: val, y: val, z: val };
         }
       })
       .on("mousemove", updateInfo);
 
-    const colorScale = scaleLinear()
-      .range([0.1, 0.9])
-      .domain([0, data.length - 1]);
-
     const linkColors = {};
 
     data.forEach((d, i) => {
       linkColors[d.label] = new THREE.LineBasicMaterial({
-        color: cubhelix(colorScale(i)),
+        color: colors(d.label),
         transparent: false
       });
     });

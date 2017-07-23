@@ -32,11 +32,11 @@ const bundleRoot = new THREE.MeshPhongMaterial({
 });
 
 export default function(d) {
-  if (!d.path) {
+  if (d.path === "(root)") {
     return bundleRoot;
   }
 
-  if (d.groups) {
+  if (d.hasChildren) {
     return folder;
   }
 
