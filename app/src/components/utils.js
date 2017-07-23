@@ -31,9 +31,9 @@ export function formatBytes(bytes, decimals) {
     return "";
   }
 
-  const value = `${parseFloat(
-    Math.pow(Math.abs(bytes) / k, i).toFixed(dm)
-  )}  ${sizes[i]}`;
+  const value = `${parseFloat((Math.abs(bytes) / k ** i).toFixed(dm))}  ${sizes[
+    i
+  ]}`;
 
   if (isNegative) {
     return `-${value}`;

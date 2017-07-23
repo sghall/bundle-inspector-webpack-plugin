@@ -20,10 +20,8 @@ const TopNav = ({ file, total }) =>
       <Link className="navbar-item" to={`/treemap?file=${file}`}>
         <div className="button is-black">Treemap</div>
       </Link>
-      <div className="navbar-item" to={`/?file=${file}`}>
-        <div className="button is-black">
-          {formatBytes(total)}
-        </div>
+      <div className="navbar-item">
+        <h3 class="title is-3">{`Total: ${formatBytes(total)}`}</h3>
       </div>
     </div>
   </nav>;
