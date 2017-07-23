@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import { formatBytes } from "../utils";
 import "./treemap.css";
 
 const formatNumber = d3.format(",d");
@@ -102,20 +103,11 @@ class Treemap extends Component {
         .call(rect);
 
       g
-        .append("rect")
-        .attr("class", "parent")
-        .call(rect)
-        .append("title")
-        .text(function(d) {
-          return formatNumber(d.value);
-        });
-
-      g
         .append("text")
         .attr("dy", ".75em")
         .text(function(d) {
           if (x(d.x + d.dx) - x(d.x) > 20 && y(d.y + d.dy) - y(d.y) > 5) {
-            return d.label;
+            return `${d.label} (${formatBytes(d.value)})`;
           }
 
           return "";
