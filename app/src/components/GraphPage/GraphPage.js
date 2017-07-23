@@ -9,17 +9,17 @@ class GraphPage extends Component {
     this.state = {
       name: "",
       path: "",
-      size: ""
+      size: null
     };
 
     this.updateInfo = this.updateInfo.bind(this);
   }
 
-  updateInfo(d) {
+  updateInfo(e, d) {
     this.setState(() => ({
       name: d.name || "",
       path: d.path || "",
-      size: d.size || ""
+      size: d.size || 0
     }));
   }
 

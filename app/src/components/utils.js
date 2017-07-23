@@ -15,14 +15,6 @@ export function createColors(data) {
   return chunkName => colors[chunkName];
 }
 
-function createNode(d) {
-  return {
-    label: d.label || "(root)",
-    value: d.statSize || 0,
-    path: d.path || "(root)"
-  };
-}
-
 export function formatBytes(bytes, decimals) {
   if (bytes === 0) {
     return "0 Bytes";
@@ -48,39 +40,4 @@ export function formatBytes(bytes, decimals) {
   }
 
   return value;
-}
-
-export function createTree(data) {
-  function add(children = [], parent) {
-    if (children.length > 0) {
-      parent.children = [];
-    }
-
-    for (let i = 0; i < children.length; i++) {
-      const child = createNode(children[i]);
-      parent.children.push(child);
-
-      if (Array.isArray(children[i].groups)) {
-        add(children[i].groups, child);
-      }
-    }
-  }
-
-  let tree;
-
-  if (data.length === 1) {
-    tree = createNode(data[0]);
-    add(data[0].groups, tree);
-  } else {
-    tree = createNode(data);
-    tree.children = [];
-
-    for (let i = 0; i < data.length; i++) {
-      const chunk = createNode(data[i]);
-      tree.children.push(chunk);
-      add(data[i].groups, chunk);
-    }
-  }
-
-  return tree;
 }

@@ -11,12 +11,11 @@ text {
   pointer-events: none;
 }
 
-.grandparent text {
+/*.grandparent text {
   font-weight: bold;
-}
+}*/
 
 rect {
-  fill: rgba(0,0,0,0.4);
   stroke: #fff;
 }
 
@@ -26,23 +25,18 @@ rect.parent,
 }
 
 .grandparent rect {
-  fill: rgba(0,0,0,0.8);
+  fill: #000;
 }
 
-.grandparent:hover rect {
-  fill: rgba(0,0,0,0.6);
-}
+/*.grandparent:hover rect {
+  fill: #333;
+}*/
 
 .children rect.parent,
 .grandparent rect {
   cursor: pointer;
 }
 
-.children rect.parent {
-  fill: #bbb;
-  fill-opacity: .5;
-}
-
-.children:hover rect.child {
-  fill: #bbb;
-}
+/*.children:hover rect.child {
+  opacity: 0.9;
+}*/

@@ -22,6 +22,13 @@ const App = ({ file, data }) => {
           path="/treemap"
           component={() => <TreemapPage data={data} colors={colors} />}
         />
+        <footer className="footer">
+          <div className="container">
+            <div className="content has-text-centered">
+              Analyzer 3D Webpack Plugin
+            </div>
+          </div>
+        </footer>
       </div>
     </Router>
   );

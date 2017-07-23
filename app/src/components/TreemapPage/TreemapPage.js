@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import processData from "./processData";
 import { formatBytes } from "../utils";
 import "./treemap.css";
 
-class Treemap extends Component {
+class TreemapPage extends Component {
   componentDidMount() {
-    const { container, props: { data } } = this;
+    const { container, props: { data, colors } } = this;
+    const tree = processData(data);
+
     const view = [960, 500];
     const trbl = [20, 0, 0, 0];
     const dims = [view[0] - trbl[1] - trbl[3], view[1] - trbl[0] - trbl[2]];
@@ -13,7 +16,7 @@ class Treemap extends Component {
     const x = d3.scaleLinear().domain([0, dims[0]]).range([0, dims[0]]);
     const y = d3.scaleLinear().domain([0, dims[1]]).range([0, dims[1]]);
 
-    const tree = d3.treemap().round(false);
+    const treemap = d3.treemap().round(false);
 
     const svg = d3
       .select(container)
@@ -37,9 +40,9 @@ class Treemap extends Component {
       .attr("y", 6 - trbl[0])
       .attr("dy", ".75em");
 
-    initialize(data);
-    layout(data);
-    display(data);
+    initialize(tree);
+    layout(tree);
+    display(tree);
 
     function initialize(d) {
       d.x = d.y = 0;
@@ -53,12 +56,12 @@ class Treemap extends Component {
         const x = { children: d.children };
         const h = d3
           .hierarchy(x, n => n.children || null)
-          .sum(d => d.value)
+          .sum(d => d.size)
           .sort((a, b) => {
             return a.value - b.value;
           });
 
-        tree(h);
+        treemap(h);
 
         h.children.forEach(function(c) {
           c.data.x = d.x + c.x0 * d.dx;
@@ -84,40 +87,36 @@ class Treemap extends Component {
       var g = g1.selectAll("g").data(d.children).enter().append("g");
 
       g
-        .filter(function(d) {
-          return d.children;
-        })
+        .filter(d => d.children)
         .classed("children", true)
         .on("click", transition);
 
       g
         .selectAll(".child")
-        .data(function(d) {
-          return d.children || [d];
-        })
+        .data(d => d.children || [d])
         .enter()
         .append("rect")
         .attr("class", "child")
+        .attr("fill", d => colors(d.chunkName))
         .call(rect);
 
       g
         .append("rect")
-        .attr("id", d => `node-${d.label.replace(/\W+/g, "-")}`)
+        .attr("id", d => `node-${d.name.replace(/\W+/g, "-")}`)
+        .attr("fill", "rgba(255, 255, 255, 0.05)")
         .call(rect);
 
       g
         .append("clipPath")
-        .attr("id", d => `clip-${d.label.replace(/\W+/g, "-")}`)
+        .attr("id", d => `clip-${d.name.replace(/\W+/g, "-")}`)
         .append("use")
-        .attr("xlink:href", d => `#node-${d.label.replace(/\W+/g, "-")}`);
+        .attr("xlink:href", d => `#node-${d.name.replace(/\W+/g, "-")}`);
 
       g
         .append("text")
-        .attr("clip-path", d => `url(#clip-${d.label.replace(/\W+/g, "-")})`)
+        .attr("clip-path", d => `url(#clip-${d.name.replace(/\W+/g, "-")})`)
         .attr("dy", ".75em")
-        .text(function(d) {
-          return `${d.label} (${formatBytes(d.value)})`;
-        })
+        .text(d => `${d.name} (${formatBytes(d.size)})`)
         .call(text);
 
       let transitioning;
@@ -135,7 +134,7 @@ class Treemap extends Component {
 
         svg.style("shape-rendering", null);
 
-        svg.selectAll(".depth").sort(function(a, b) {
+        svg.selectAll(".depth").sort((a, b) => {
           return a.depth - b.depth;
         });
 
@@ -146,7 +145,7 @@ class Treemap extends Component {
         t1.selectAll("rect").call(rect);
         t2.selectAll("rect").call(rect);
 
-        t1.remove().each(function() {
+        t1.remove().each(() => {
           svg.style("shape-rendering", "crispEdges");
           transitioning = false;
         });
@@ -156,33 +155,19 @@ class Treemap extends Component {
     }
 
     function text(text) {
-      text
-        .attr("x", function(d) {
-          return x(d.x) + 6;
-        })
-        .attr("y", function(d) {
-          return y(d.y) + 6;
-        });
+      text.attr("x", d => x(d.x) + 6).attr("y", d => y(d.y) + 6);
     }
 
     function rect(rect) {
       rect
-        .attr("x", function(d) {
-          return x(d.x);
-        })
-        .attr("y", function(d) {
-          return y(d.y);
-        })
-        .attr("width", function(d) {
-          return x(d.x + d.dx) - x(d.x);
-        })
-        .attr("height", function(d) {
-          return y(d.y + d.dy) - y(d.y);
-        });
+        .attr("x", d => x(d.x))
+        .attr("y", d => y(d.y))
+        .attr("width", d => x(d.x + d.dx) - x(d.x))
+        .attr("height", d => y(d.y + d.dy) - y(d.y));
     }
 
     function name(d) {
-      return d.parent ? name(d.parent) + "/" + d.label : d.label;
+      return d.parent ? name(d.parent) + "/" + d.name : d.name;
     }
   }
 
@@ -191,4 +176,4 @@ class Treemap extends Component {
   }
 }
 
-export default Treemap;
+export default TreemapPage;
