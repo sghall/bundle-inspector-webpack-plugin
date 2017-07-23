@@ -6,6 +6,7 @@
 }
 
 text {
+  fill: white;
   font-size: 10px;
   pointer-events: none;
 }
@@ -15,7 +16,7 @@ text {
 }
 
 rect {
-  fill: rgba(0,0,0,0.05);
+  fill: rgba(0,0,0,0.4);
   stroke: #fff;
 }
 
@@ -25,11 +26,11 @@ rect.parent,
 }
 
 .grandparent rect {
-  fill: orange;
+  fill: rgba(0,0,0,0.8);
 }
 
 .grandparent:hover rect {
-  fill: #ee9700;
+  fill: rgba(0,0,0,0.6);
 }
 
 .children rect.parent,
