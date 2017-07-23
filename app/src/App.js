@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Graph from "./Graph";
 import InfoPanel from "./InfoPanel";
 // import Treemap from "./Treemap";
@@ -42,14 +43,33 @@ class App extends Component {
             </a>
           </div>
         </nav>
-        <InfoPanel {...this.state} />
-        <Graph
-          names={names}
-          nodes={nodes}
-          links={links}
-          sizes={sizes}
-          updateStats={this.updateStats}
-        />
+        <Router>
+          <div>
+            <Route
+              exact
+              path="/"
+              component={props =>
+                <Graph
+                  names={names}
+                  nodes={nodes}
+                  links={links}
+                  sizes={sizes}
+                  updateStats={this.updateStats}
+                />}
+            />
+            <Route
+              path="/:id/:hover?"
+              component={props =>
+                <Graph
+                  names={names}
+                  nodes={nodes}
+                  links={links}
+                  sizes={sizes}
+                  updateStats={this.updateStats}
+                />}
+            />
+          </div>
+        </Router>
       </div>
     );
   }
