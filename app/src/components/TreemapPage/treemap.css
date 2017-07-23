@@ -37,6 +37,6 @@ rect.parent,
   cursor: pointer;
 }
 
-/*.children:hover rect.child {
-  opacity: 0.9;
-}*/
+.children:hover rect.child {
+  opacity: 0.8;
+}

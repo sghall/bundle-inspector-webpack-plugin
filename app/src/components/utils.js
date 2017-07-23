@@ -1,10 +1,10 @@
 import { scaleLinear } from "d3-scale";
 import { interpolateCubehelixLong } from "d3-interpolate";
 
-const cubhelix = interpolateCubehelixLong("blue", "red");
+const cubhelix = interpolateCubehelixLong("green", "red");
 
 export function createColors(data) {
-  const scale = scaleLinear().range([0.1, 0.9]).domain([0, data.length - 1]);
+  const scale = scaleLinear().range([0.25, 0.9]).domain([0, data.length - 1]);
 
   const colors = {};
 
