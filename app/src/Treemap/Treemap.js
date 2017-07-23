@@ -3,12 +3,12 @@ import { format } from "d3-format";
 import { scaleLinear } from "d3-scale";
 import { treemap, hierarchy } from "d3-hierarchy";
 import { select } from "d3-selection";
+import flare from "./flare.json";
 import "./treemap.css";
 
 class Treemap extends Component {
   componentDidMount() {
     const { container, props: { data } } = this;
-    console.log(data);
 
     const margin = { top: 20, right: 0, bottom: 0, left: 0 };
     const width = 960;
@@ -20,7 +20,7 @@ class Treemap extends Component {
     const x = scaleLinear().domain([0, width]).range([0, width]);
     const y = scaleLinear().domain([0, height]).range([0, height]);
 
-    const tree = treemap().size([width, height]).padding(1).round(true);
+    const tree = treemap().padding(1).round(false);
 
     // const root = hierarchy(data).sum(d => d.value);
     // console.log("root!!!", root);
@@ -57,8 +57,8 @@ class Treemap extends Component {
     // const nodes = hierarchy(data).sum(d => d.value);
     // console.log(tree(hierarchy({ children: data.children }).sum(d => d.value)));
 
-    initialize(data);
-    layout(data);
+    initialize(flare);
+    layout(flare);
 
     function initialize(d) {
       d.x = d.y = 0;
@@ -69,7 +69,15 @@ class Treemap extends Component {
 
     function layout(d) {
       if (d.children) {
-        const h = hierarchy({ children: d.children }).sum(d => d.value);
+        const x = { children: d.children };
+        const h = hierarchy(x, n => {
+          return n === x ? n.children : null;
+        })
+          .sum(d => d.value)
+          .sort((a, b) => {
+            return a.value - b.value;
+          });
+
         tree(h);
 
         h.children.forEach(function(c) {
@@ -85,7 +93,7 @@ class Treemap extends Component {
       }
     }
 
-    console.log(data);
+    console.log(flare);
     // function display(d) {
     //   grandparent
     //     .datum(d.parent)
