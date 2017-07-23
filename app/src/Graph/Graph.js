@@ -142,7 +142,9 @@ class Graph extends Component {
   }
 
   render() {
-    return <canvas ref={d => (this.canvas = d)} />;
+    return (
+      <canvas style={{ marginTop: "-3.25rem" }} ref={d => (this.canvas = d)} />
+    );
   }
 }
 
