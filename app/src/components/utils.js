@@ -3,7 +3,7 @@ import { interpolateCubehelixLong } from "d3-interpolate";
 
 const cubhelix = interpolateCubehelixLong("blue", "red");
 
-export function chunkColors(data) {
+export function createColors(data) {
   const scale = scaleLinear().range([0.1, 0.9]).domain([0, data.length - 1]);
 
   const colors = {};
@@ -15,11 +15,11 @@ export function chunkColors(data) {
   return chunkName => colors[chunkName];
 }
 
-function createNode(data) {
+function createNode(d) {
   return {
-    label: data.label || "(root)",
-    value: data.statSize || 0,
-    path: data.path || "(root)"
+    label: d.label || "(root)",
+    value: d.statSize || 0,
+    path: d.path || "(root)"
   };
 }
 
@@ -48,53 +48,6 @@ export function formatBytes(bytes, decimals) {
   }
 
   return value;
-}
-
-export function createNodesAndLinks(data) {
-  const nodes = [];
-  const links = [];
-  const names = [];
-  const sizes = [Infinity, -Infinity];
-
-  function add(children, parent, chunkName) {
-    for (let i = 0; i < children.length; i++) {
-      const target = children[i];
-
-      nodes.push(target);
-
-      links.push({
-        source: parent,
-        target,
-        chunkName
-      });
-
-      if (target.groups) {
-        add(target.groups, target, chunkName);
-      } else {
-        if (target.statSize < sizes[0]) {
-          sizes[0] = target.statSize;
-        }
-
-        if (target.statSize > sizes[1]) {
-          sizes[1] = target.statSize;
-        }
-      }
-    }
-  }
-
-  for (let i = 0; i < data.length; i++) {
-    const chunk = data[i];
-    nodes.push(chunk);
-    names.push({ label: chunk.label, value: true });
-    add(chunk.groups, chunk, chunk.label);
-  }
-
-  return {
-    names,
-    nodes,
-    links,
-    sizes
-  };
 }
 
 export function createTree(data) {

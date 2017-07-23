@@ -10,14 +10,17 @@ import {
   forceLink,
   forceCenter
 } from "d3-force-3d";
-import colors from "./colors";
+import materials from "./materials";
 import raycast from "./raycast";
+import processData from "./processData";
 
 const cubhelix = interpolateCubehelixLong("blue", "red");
 
 class Graph extends Component {
   componentDidMount() {
-    const { canvas, props: { names, nodes, links, sizes, updateStats } } = this;
+    const { canvas, props: { data, colors, updateInfo } } = this;
+    const { nodes, links, sizes } = processData(data);
+
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
@@ -56,7 +59,7 @@ class Graph extends Component {
       .enter()
       .append("mesh")
       .attr("geometry", nodeGeometry)
-      .attr("material", colors)
+      .attr("material", materials)
       .attr("position", () => {
         return { x: 0, y: 0, z: 0 };
       })
@@ -73,15 +76,15 @@ class Graph extends Component {
           return { x: val, y: val, z: val };
         }
       })
-      .on("mousemove", updateStats);
+      .on("mousemove", updateInfo);
 
     const colorScale = scaleLinear()
       .range([0.1, 0.9])
-      .domain([0, names.length - 1]);
+      .domain([0, data.length - 1]);
 
     const linkColors = {};
 
-    names.forEach((d, i) => {
+    data.forEach((d, i) => {
       linkColors[d.label] = new THREE.LineBasicMaterial({
         color: cubhelix(colorScale(i)),
         transparent: false

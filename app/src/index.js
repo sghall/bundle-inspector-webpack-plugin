@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "bulma/css/bulma.css";
 import "./index.css";
 import App from "./App";
-import { createNodesAndLinks, createTree } from "./utils";
 
 const file = new URLSearchParams((window.location.search || "").slice(1)).get(
   "file"
@@ -15,11 +14,7 @@ fetch(path)
   .then(d => d.json())
   .then(data => {
     ReactDOM.render(
-      <App
-        file={file}
-        data={createTree(data)}
-        {...createNodesAndLinks(data)}
-      />,
+      <App file={file} data={data} />,
       document.getElementById("root")
     );
   })

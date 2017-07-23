@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-class InfoPanel extends Component {
+class Info extends Component {
   render() {
-    const { label, path } = this.props;
+    const { name, path, size } = this.props;
 
     return (
       <div style={{ position: "relative", color: "white" }}>
         <h4 style={{ position: "absolute", top: 10, left: 10 }}>
-          {label}
+          {`${name} (${size})`}
         </h4>
         <h6 style={{ position: "absolute", top: 30, left: 10 }}>
           {path}
@@ -17,4 +17,4 @@ class InfoPanel extends Component {
   }
 }
 
-export default InfoPanel;
+export default Info;
