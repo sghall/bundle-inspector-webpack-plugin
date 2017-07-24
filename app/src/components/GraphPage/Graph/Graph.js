@@ -122,7 +122,6 @@ class Graph extends Component {
         ];
 
         this.geometry.verticesNeedUpdate = true;
-        this.geometry.computeBoundingSphere();
       });
     }
 
