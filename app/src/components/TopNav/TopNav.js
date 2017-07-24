@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatBytes } from "./utils";
+import { formatBytes } from "../utils";
+import monkey from "./chunky-monkey.svg";
 
 const TopNav = ({ file, total }) =>
   <nav className="navbar">
     <div className="navbar-brand">
-      <div className="navbar-item">Analyzer 3D Webpack Plugin</div>
+      <div className="navbar-item">
+        <img src={monkey} alt="chunky-monkey" height="32" />
+      </div>
       <div className="navbar-item">
         <a
           href="https://github.com/sghall/analyzer-3d-webpack-plugin"
