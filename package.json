@@ -1,7 +1,8 @@
 {
-  "name": "analyzer-3d-webpack-plugin",
+  "name": "chunky-monkey",
   "version": "0.1.0",
-  "description": "WebGL Bundle Analyzer",
+  "description": "Webpack Bundle Analysis Tools",
+  "private": true,
   "scripts": {
     "start": "node cli/index.js",
     "pretty": "prettier --write cli/*.js",
@@ -9,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sghall/analyzer-3d-webpack-plugin.git"
+    "url": "git+https://github.com/sghall/chunky-monkey.git"
   },
   "author": "Steven Hall <hall.steven.g@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sghall/analyzer-3d-webpack-plugin/issues"
+    "url": "https://github.com/sghall/chunky-monkey/issues"
   },
-  "homepage": "https://github.com/sghall/analyzer-3d-webpack-plugin#readme",
+  "homepage": "https://github.com/sghall/chunky-monkey#readme",
   "bin": "bin.js",
   "main": "index.js",
   "devDependencies": {

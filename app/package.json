@@ -1,6 +1,7 @@
 {
-  "name": "analyzer-3d-app",
+  "name": "chunky-monkey-app",
   "version": "0.1.0",
+  "description": "Webpack Bundle Analysis Tools",
   "private": true,
   "dependencies": {
     "bulma": "^0.4.3",

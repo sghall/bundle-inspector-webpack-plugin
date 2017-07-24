@@ -10,13 +10,13 @@ const server = require("./server");
 const cli = meow(
   `
   Usage:
-    analyzer-3d-webpack-plugin  <stats file path>
+    chunky-monkey  <stats file path>
 
   Options:
     --demo: view demo
 
   Example:
-    analyzer-3d-webpack-plugin my_app/stats.json
+    chunky-monkey my_app/stats.json
 `,
   {
     boolean: ["demo"]
