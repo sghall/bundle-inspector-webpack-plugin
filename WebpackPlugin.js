@@ -1,6 +1,6 @@
 const fse = require("fs-extra");
 const path = require("path");
-const { bold } = require("chalk");
+const { yellow } = require("chalk");
 
 class WebpackPlugin {
   constructor(opts) {
@@ -46,7 +46,7 @@ class WebpackPlugin {
     fse.writeJsonSync(statsFilepath, stats, { spaces: 2 });
 
     console.log(
-      `${bold("Chunky Monkey")} saved stats file to ${bold(statsFilepath)}`
+      `${yellow("Chunky Monkey")} saved stats file to ${yellow(statsFilepath)}`
     );
   }
 
