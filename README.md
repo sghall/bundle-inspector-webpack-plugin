@@ -3,13 +3,15 @@
   	<img src="https://user-images.githubusercontent.com/4615775/28554415-32c8fa48-70ae-11e7-8917-f19659b27be4.png" alt="Chunky Monkey Logo" style="width:450px;"/>
   </a>
 </div>
+<small>Logo image created by Oksana Latysheva from the [Noun Project](https://thenounproject.com/)</small>
 
 Under construction. Have a :banana:.
 
 ```
 npm install -g chunky-monkey
-
-chunky-monkey /path/to/webpack/stats
 ```
 
-Logo image created by Oksana Latysheva from the [Noun Project](https://thenounproject.com/)
+```
+chunky-monkey /path/to/webpack/stats.json
+```
+
