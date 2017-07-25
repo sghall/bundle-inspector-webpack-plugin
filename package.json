@@ -22,6 +22,9 @@
   "bin": "bin.js",
   "main": "index.js",
   "scripts": {
+    "start": "node cli/index.js",
+    "pretty": "prettier --write cli/*.js",
+    "precommit": "lint-staged",
     "build": "npm run app:clean && npm run app:build",
     "app:clean": "rimraf app/build && rimraf app/public/data_*",
     "app:build": "cd app && npm run build cd ..",
