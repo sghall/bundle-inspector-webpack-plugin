@@ -10,12 +10,18 @@ Under construction. Have a :banana:.
 npm install -g chunky-monkey
 ```
 
+Basic usage:
 ```
 chunky-monkey /path/to/webpack/stats.json
 ```
 
-Uses the data processing from the awesome [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
+See a demo:
+```
+chunky-monkey --demo
+```
 
+Uses the data processing from the awesome [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
+The app is built using [create-react-app](https://github.com/facebookincubator/create-react-app).
 
 ## Data Views:
 
