@@ -4,7 +4,7 @@
   </a>
 </div>
 
-Under construction. Have a :banana:.
+Under development.  Feedback welcome.
 
 ```
 npm install -g chunky-monkey
@@ -60,7 +60,7 @@ Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mik
 It's early days for this project.  Lots of work to be done on the visualizations to make them more helpful.
 Need to make it work as webpack plugin as well as command line tool.
 
-Have a suggestion/idea/comment/cirticism?  Open an issue.
+Have a suggestion/idea/comment/criticism?  Open an issue.
 
 
 Logo image created by Oksana Latysheva from the [Noun Project](https://thenounproject.com/)
