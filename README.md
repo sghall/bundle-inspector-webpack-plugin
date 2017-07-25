@@ -14,7 +14,7 @@ npm install -g chunky-monkey
 chunky-monkey /path/to/webpack/stats.json
 ```
 
-Uses the data processing from [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
+Uses the data processing from the awesome [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
 
 
 ## Data Views:
@@ -35,12 +35,9 @@ Uses:
 
 [d3](https://github.com/vasturiano/d3-force-3d) - Data Visualization Library
 
-Uses the drill-in concept by Mike Bostock found here...
+Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mike Bostock.
 
-[zoomable treemaps](https://bost.ocks.org/mike/treemap/)
-
-
-Screenshots:
+## Screenshots:
 
 <a href="https://github.com/sghall/chunky-monkey">
 	<img src="https://user-images.githubusercontent.com/4615775/28555665-2659bcfe-70b6-11e7-8844-d8f3e4a9381a.png" alt="Chunky Monkey" style="width:450px;"/>
