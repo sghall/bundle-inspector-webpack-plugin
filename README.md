@@ -11,3 +11,5 @@ npm install -g chunky-monkey
 
 chunky-monkey /path/to/webpack/stats
 ```
+
+Logo image created by Oksana Latysheva from the [Noun Project](https://thenounproject.com/)
