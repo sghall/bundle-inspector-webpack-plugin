@@ -1,6 +1,6 @@
 const path = require("path");
 
-const APP_PUBLIC = "/../app/public";
+const APP_PUBLIC = "/../app/build";
 
 module.exports = {
   getWritePathForSerializedData: (dataPath, contextPath = __dirname) => {
