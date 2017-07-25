@@ -1,13 +1,19 @@
 {
   "name": "chunky-monkey",
   "version": "0.1.0",
-  "description": "Webpack Bundle Analysis Tools",
+  "description": "Analysis Tools for Webpack Chunks",
   "private": true,
   "scripts": {
     "start": "node cli/index.js",
     "pretty": "prettier --write cli/*.js",
     "precommit": "lint-staged"
   },
+  "keywords": [
+    "webpack",
+    "cli",
+    "plugin",
+    "visualization"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sghall/chunky-monkey.git"

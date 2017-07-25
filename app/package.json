@@ -1,7 +1,7 @@
 {
   "name": "chunky-monkey-app",
   "version": "0.1.0",
-  "description": "Webpack Bundle Analysis Tools",
+  "description": "Analysis Tools for Webpack Chunks",
   "private": true,
   "dependencies": {
     "bulma": "^0.4.3",
