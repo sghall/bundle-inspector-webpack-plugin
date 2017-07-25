@@ -17,17 +17,19 @@ chunky-monkey /path/to/webpack/stats.json
 Uses the data processing from [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
 
 
-##Data Views:
+## Data Views:
 
-###3D Force Directed Graph
+### 3D Force Directed Graph
 
 Uses:
 
 [d3-force-3d](https://github.com/vasturiano/d3-force-3d) - 3D layout
+
 [three.js](https://github.com/mrdoob/three.js/) - JavaScript WebGL
+
 [subunit](https://github.com/sghall/subunit) - WebGL Selections
 
-###Treemap
+### Treemap
 
 Uses:
 
