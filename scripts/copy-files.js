@@ -73,4 +73,20 @@ function createPackageFile() {
 
 const files = ["README.md", "LICENSE"];
 
-Promise.all(files.map(file => copyFile(file))).then(() => createPackageFile());
+Promise.all(files.map(file => copyFile(file)))
+  .then(() => createPackageFile())
+  .then(() => {
+    const src = path.resolve(__dirname, "../app/build");
+    const trg = path.resolve(__dirname, "../build/app/build");
+    return fse.copy(src, trg);
+  })
+  .then(() => {
+    const src = path.resolve(__dirname, "../cli");
+    const trg = path.resolve(__dirname, "../build/cli");
+    return fse.copy(src, trg);
+  })
+  .then(() => {
+    const src = path.resolve(__dirname, "../bin.js");
+    const trg = path.resolve(__dirname, "../build/bin.js");
+    return fse.copy(src, trg);
+  });
