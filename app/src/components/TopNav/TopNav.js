@@ -11,7 +11,7 @@ const TopNav = ({ file, total }) =>
       </div>
       <div className="navbar-item">
         <a
-          href="https://github.com/sghall/analyzer-3d-webpack-plugin"
+          href="https://github.com/sghall/chunky-monkey"
           className="button is-outlined"
         >
           Github

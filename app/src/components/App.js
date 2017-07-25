@@ -25,7 +25,8 @@ const App = ({ file, data }) => {
         <footer className="footer">
           <div className="container">
             <div className="content has-text-centered">
-              Analyzer 3D Webpack Plugin
+              Chunky Monkey on
+              <a href="https://github.com/sghall/chunky-monkey"> Github</a>
             </div>
           </div>
         </footer>
