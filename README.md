@@ -29,7 +29,7 @@ Uses:
 
 [subunit](https://github.com/sghall/subunit) - WebGL Selections
 
-### Treemap
+### Zoomable Treemap
 
 Uses:
 
@@ -46,5 +46,14 @@ Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mik
 <a href="https://github.com/sghall/chunky-monkey">
 	<img src="https://user-images.githubusercontent.com/4615775/28555672-3187cbe8-70b6-11e7-97b4-2dd688aa8b72.png" alt="Chunky Monkey" style="width:450px;"/>
 </a>
+
+
+## Roadmap
+
+It's early days for this project.  Lots of work to be done on the visualizations to make them more helpful.
+Need to make it work as webpack plugin as well as command line tool.
+
+Have a suggestion/idea/comment/cirticism?  Open an issue.
+
 
 Logo image created by Oksana Latysheva from the [Noun Project](https://thenounproject.com/)
