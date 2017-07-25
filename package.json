@@ -20,15 +20,15 @@
   },
   "homepage": "https://github.com/sghall/chunky-monkey#readme",
   "bin": "bin.js",
-  "main": "index.js",
   "scripts": {
     "start": "node cli/index.js",
     "pretty": "prettier --write cli/*.js",
     "precommit": "lint-staged",
-    "build": "npm run app:clean && npm run app:build",
+    "build": "npm run build:clean && npm run app:clean && npm run app:build && npm run build:files",
     "app:clean": "rimraf app/build && rimraf app/public/data_*",
     "app:build": "cd app && npm run build cd ..",
-    "build:copy-files": "node ./scripts/copy-files.js"
+    "build:clean": "rimraf build",
+    "build:files": "node ./scripts/copy-files.js"
   },
   "devDependencies": {
     "eslint": "^4.2.0",
