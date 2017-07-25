@@ -21,7 +21,8 @@ chunky-monkey --demo
 ```
 
 Uses the data processing from the awesome [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
-The app is built using [create-react-app](https://github.com/facebookincubator/create-react-app).
+The app is built using [Create React App](https://github.com/facebookincubator/create-react-app).
+Lot of ideas and inspiration from [Bundle Buddy](https://github.com/samccone/bundle-buddy).
 
 ## Data Views:
 
