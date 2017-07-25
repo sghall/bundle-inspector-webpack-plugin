@@ -14,10 +14,13 @@ import materials from "./materials";
 import processData from "./processData";
 
 class Graph extends Component {
+  componentWillMount() {
+    this.mounted = true;
+  }
+
   componentDidMount() {
     const { canvas, props: { data, colors, updateInfo } } = this;
     const { nodes, links, sizes } = processData(data);
-
     const { innerWidth, innerHeight } = window;
 
     const scene = new THREE.Scene();
@@ -128,15 +131,22 @@ class Graph extends Component {
     const control = new OrbitControls(camera, canvas);
     this.stopListening = raycast(camera, node.nodes(), "mousemove");
 
-    function animate() {
+    const animate = () => {
       control.update();
-      requestAnimationFrame(animate);
+
+      if (this.mounted === true) {
+        requestAnimationFrame(animate);
+      }
+
       renderer.render(scene, camera);
-    }
+    };
+
     animate();
   }
 
   componentWillUnmount() {
+    this.mounted = false;
+
     if (this.stopListening) {
       this.stopListening();
     }
