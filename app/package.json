@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "Analysis Tools for Webpack Chunks",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "bulma": "^0.4.3",
     "d3": "^4.10.0",
@@ -16,11 +22,5 @@
   },
   "devDependencies": {
     "react-scripts": "1.0.10"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }

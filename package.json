@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "description": "Analysis Tools for Webpack Chunks",
   "private": true,
-  "scripts": {
-    "start": "node cli/index.js",
-    "pretty": "prettier --write cli/*.js",
-    "precommit": "lint-staged"
-  },
   "keywords": [
     "webpack",
     "cli",
@@ -26,12 +21,20 @@
   "homepage": "https://github.com/sghall/chunky-monkey#readme",
   "bin": "bin.js",
   "main": "index.js",
+  "scripts": {
+    "build": "npm run app:clean && npm run app:build",
+    "app:clean": "rimraf app/build && rimraf app/public/data_*",
+    "app:build": "cd app && npm run build cd ..",
+    "build:copy-files": "node ./scripts/copy-files.js"
+  },
   "devDependencies": {
     "eslint": "^4.2.0",
     "eslint-plugin-prettier": "^2.1.2",
+    "fs-extra": "^4.0.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.2",
-    "prettier": "^1.5.3"
+    "prettier": "^1.5.3",
+    "rimraf": "^2.6.1"
   },
   "dependencies": {
     "chalk": "^2.0.1",

@@ -7,14 +7,7 @@ const path = require('path');
 function copyFile(file) {
   const buildPath = path.resolve(__dirname, '../build/', path.basename(file));
   return new Promise((resolve) => {
-    fse.copy(
-      file,
-      buildPath,
-      (err) => {
-        if (err) throw err;
-        resolve();
-      },
-    );
+    fse.copy(file, buildPath, (err) => { if (err) throw err; resolve(); })
   })
   .then(() => console.log(`Copied ${file} to ${buildPath}`));
 }
@@ -39,6 +32,7 @@ function createPackageFile() {
       repository,
       license,
       bugs,
+      bin,
       homepage,
       peerDependencies,
       dependencies,
@@ -49,9 +43,6 @@ function createPackageFile() {
       author,
       version,
       description,
-      main: './index.js',
-      module: './index.es.js',
-      'jsnext:main': './index.es.js',
       keywords,
       repository,
       license,
