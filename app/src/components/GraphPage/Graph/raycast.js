@@ -23,5 +23,10 @@ export default function(camera, items, type) {
     }
   };
 
-  document.addEventListener(type, debounce(listener, 10), false);
+  const debounced = debounce(listener, 10);
+  document.addEventListener(type, debounced, false);
+
+  return function() {
+    document.removeEventListener(type, debounced, false);
+  };
 }

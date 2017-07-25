@@ -126,7 +126,7 @@ class Graph extends Component {
     }
 
     const control = new OrbitControls(camera, canvas);
-    raycast(camera, node.nodes(), "mousemove");
+    this.stopListening = raycast(camera, node.nodes(), "mousemove");
 
     function animate() {
       control.update();
@@ -134,6 +134,12 @@ class Graph extends Component {
       renderer.render(scene, camera);
     }
     animate();
+  }
+
+  componentWillUnmount() {
+    if (this.stopListening) {
+      this.stopListening();
+    }
   }
 
   render() {
