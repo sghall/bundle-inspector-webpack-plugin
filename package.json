@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sghall/chunky-monkey#readme",
   "bin": "bin.js",
+  "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
     "pretty": "prettier --write src/*.js",
