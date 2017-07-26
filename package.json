@@ -21,8 +21,8 @@
   "homepage": "https://github.com/sghall/chunky-monkey#readme",
   "bin": "bin.js",
   "scripts": {
-    "start": "node cli/index.js",
-    "pretty": "prettier --write cli/*.js",
+    "start": "node src/index.js",
+    "pretty": "prettier --write src/*.js",
     "precommit": "lint-staged",
     "build": "npm run build:clean && npm run app:clean && npm run app:build && npm run build:files",
     "app:clean": "rimraf app/build && rimraf app/public/data_*",
