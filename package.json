@@ -1,6 +1,6 @@
 {
   "name": "chunky-monkey",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Analysis Tools for Webpack Chunks",
   "private": true,
   "keywords": [
