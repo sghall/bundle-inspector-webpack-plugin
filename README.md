@@ -33,6 +33,7 @@ npm install chunky-monkey --save-dev
 ```
 const ChunkyMonkey = require('chunky-monkey');
 
+// In your webpack config..
 // ...
 plugins: [new ChunkyMonkey()]
 // ...
@@ -43,6 +44,7 @@ plugins: [new ChunkyMonkey()]
 ```
 import ChunkyMonkey from 'chunky-monkey';
 
+// In your webpack config..
 // ...
 plugins: [new ChunkyMonkey()]
 // ...
