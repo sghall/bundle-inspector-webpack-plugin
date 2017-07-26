@@ -6,6 +6,8 @@
 
 Under development.  Feedback welcome.
 
+## See a [demo in your browser](https://sghall.github.io/chunky-monkey/#/) - NOT mobile friendly
+
 ## CLI:
 
 ```
