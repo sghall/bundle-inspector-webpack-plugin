@@ -31,7 +31,7 @@ class WebpackPlugin {
       const dataFile = `data_${Date.now()}`;
       const writePath = getWritePathForSerializedData(dataFile);
 
-      fs.writeFileSync(writePath, processStats(stats));
+      fse.writeFileSync(writePath, processStats(stats));
       actions.push(() => this.startServer(dataFile));
 
       if (actions.length) {
