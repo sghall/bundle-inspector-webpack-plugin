@@ -1,6 +1,7 @@
 const fse = require("fs-extra");
 const path = require("path");
 const { yellow } = require("chalk");
+const server = require("./server");
 
 class WebpackPlugin {
   constructor(opts) {
@@ -28,7 +29,7 @@ class WebpackPlugin {
         actions.push(() => this.generateStatsFile(stats));
       }
 
-      // actions.push(() => this.startServer(stats));
+      actions.push(() => this.startServer(stats));
 
       if (actions.length) {
         setImmediate(() => {
@@ -50,19 +51,19 @@ class WebpackPlugin {
     );
   }
 
-  // async startServer(stats) {
-  //   const { opts: { open, host, port } } = this;
+  startServer(stats) {
+    const { opts: { open, host, port } } = this;
 
-  //   if (this.server) {
-  //     (await this.server).updateChartData(stats);
-  //   } else {
-  //     this.server = viewer.startServer(stats, {
-  //       open,
-  //       host,
-  //       port,
-  //     });
-  //   }
-  // }
+    if (this.server) {
+      this.server.updateChartData(stats);
+    } else {
+      this.server = viewer.startServer(stats, {
+        open,
+        host,
+        port
+      });
+    }
+  }
 }
 
 module.exports = WebpackPlugin;
