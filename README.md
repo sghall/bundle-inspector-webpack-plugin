@@ -17,7 +17,7 @@ Basic usage:
 chunky-monkey /path/to/webpack/stats.json
 ```
 
-How do I get stats JSON from webpack?
+How do I get JSON stats from webpack?
 ```
 webpack --json > stats.json
 ```
