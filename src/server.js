@@ -1,5 +1,6 @@
-const httpServer = require("http-server");
 const openPort = require("openport");
+const express = require("express");
+const http = require("http");
 const path = require("path");
 const opn = require("opn");
 const ws = require("ws");
@@ -13,16 +14,18 @@ module.exports = function launchServer(dataPath, contextPath = __dirname) {
       process.exit(1);
     }
 
-    const server = httpServer
-      .createServer({
-        root: path.join(contextPath, APP_BUILD)
-      })
-      .listen(port, "0.0.0.0", () => {
-        console.log(`Server running on port ${port}`);
-        console.log(`Press Control+C to Quit`);
-        opn(`http://localhost:${port}?file=${dataPath}`);
-      });
+    const app = express();
 
+    app.use(express.static(path.resolve(contextPath, "..", "build")));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(contextPath, "..", "build", "index.html"));
+    });
+
+    app.listen(PORT, () => {
+      console.log(`App listening on port ${PORT}!`);
+    });
+
+    const server = http.createServer(app);
     const wss = new ws.Server({ server });
 
     return function(dataPath) {

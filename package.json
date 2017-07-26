@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "chalk": "^2.0.1",
-    "http-server": "^0.10.0",
+    "express": "^4.15.3",
     "meow": "^3.7.0",
     "openport": "0.0.4",
     "opn": "^5.1.0",
