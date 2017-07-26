@@ -6,6 +6,8 @@
 
 Under development.  Feedback welcome.
 
+## Command Line Usage
+
 ```
 npm install -g chunky-monkey
 ```
@@ -19,6 +21,20 @@ See a demo:
 ```
 chunky-monkey --demo
 ```
+
+## Webpack Plugin Usage
+
+```
+const ChunkyMonkey = require('chunky-monkey');
+
+// ...
+plugins: [new ChunkyMonkey()]
+// ...
+```
+
+The server listens via websockets so it will update as your developing.
+The 3D graph can be resource intensive, so it may be better to keep it on the treemap while your developing.
+It will refresh to the page your on each time webapck updates.
 
 Uses the data processing from the awesome [Webpack Bundle Analyzer](https://github.com/th0r/webpack-bundle-analyzer).
 The app is built using [Create React App](https://github.com/facebookincubator/create-react-app).
@@ -58,7 +74,6 @@ Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mik
 ## Roadmap
 
 It's early days for this project.  Lots of work to be done on the visualizations to make them more helpful.
-Need to make it work as webpack plugin as well as command line tool.
 
 Have a suggestion/idea/comment/criticism?  Open an issue.
 
