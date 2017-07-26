@@ -1,0 +1,32 @@
+import * as THREE from "three";
+import debounce from "lodash.debounce";
+
+const raycaster = new THREE.Raycaster();
+
+export default function(camera, items, type) {
+  const listener = function(event) {
+    const vector = new THREE.Vector3();
+
+    const x = (event.clientX - 1) / window.innerWidth * 2 - 1;
+    const y = -((event.clientY - 1) / window.innerHeight) * 2 + 1;
+
+    vector.set(x, y, 0.5);
+    vector.unproject(camera);
+
+    raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
+
+    const target = raycaster.intersectObjects(items, true);
+
+    if (target.length) {
+      target[0].type = type;
+      target[0].object.dispatchEvent(target[0]);
+    }
+  };
+
+  const debounced = debounce(listener, 10);
+  document.addEventListener(type, debounced, false);
+
+  return function() {
+    document.removeEventListener(type, debounced, false);
+  };
+}

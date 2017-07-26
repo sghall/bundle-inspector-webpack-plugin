@@ -1,0 +1,58 @@
+{
+  "name": "chunky-monkey",
+  "version": "0.1.7",
+  "description": "Analysis Tools for Webpack Chunks",
+  "private": true,
+  "keywords": [
+    "webpack",
+    "cli",
+    "plugin",
+    "visualization"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sghall/chunky-monkey.git"
+  },
+  "author": "Steven Hall <hall.steven.g@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sghall/chunky-monkey/issues"
+  },
+  "homepage": "https://github.com/sghall/chunky-monkey#readme",
+  "bin": "bin.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "pretty": "prettier --write src/*.js",
+    "precommit": "lint-staged",
+    "build": "npm run build:clean && npm run app:clean && npm run app:build && npm run build:files",
+    "app:clean": "rimraf app/build && rimraf app/public/data_*",
+    "app:build": "cd app && npm run build cd ..",
+    "build:clean": "rimraf build",
+    "build:files": "node ./scripts/copy-files.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.2.0",
+    "eslint-plugin-prettier": "^2.1.2",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3",
+    "rimraf": "^2.6.1"
+  },
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "express": "^4.15.3",
+    "fs-extra": "^4.0.0",
+    "meow": "^3.7.0",
+    "openport": "0.0.4",
+    "opn": "^5.1.0",
+    "webpack-bundle-analyzer": "^2.8.3",
+    "ws": "^3.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
