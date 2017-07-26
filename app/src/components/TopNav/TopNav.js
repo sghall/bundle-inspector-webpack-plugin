@@ -7,7 +7,7 @@ const TopNav = ({ file, total }) =>
   <nav className="navbar">
     <div className="navbar-brand">
       <div className="navbar-item">
-        <img src={monkey} alt="chunky-monkey" height="32" />
+        <img src={monkey} alt="chunky-monkey" style={{ height: 32 }} />
       </div>
       <div className="navbar-item">
         <a
