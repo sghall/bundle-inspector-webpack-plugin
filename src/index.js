@@ -36,7 +36,7 @@ if (cli.flags["demo"]) {
   const dataFile = `data_${Date.now()}`;
   const writePath = getWritePathForSerializedData(dataFile);
 
-  fs.writeFileSync(writePath, processStats(stats));
+  fs.writeFileSync(writePath, processStats(JSON.parse(stats)));
 
   console.log(`
     stats file: ${chalk.yellow(input)}
