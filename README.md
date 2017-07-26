@@ -28,7 +28,7 @@ chunky-monkey --demo
 npm install chunky-monkey --save-dev
 ```
 
-### CJS Import
+### CJS Import:
 
 ```
 const ChunkyMonkey = require('chunky-monkey');
@@ -38,7 +38,7 @@ plugins: [new ChunkyMonkey()]
 // ...
 ```
 
-### ES6 Import
+### ES6 Import:
 
 ```
 import ChunkyMonkey from 'chunky-monkey';
