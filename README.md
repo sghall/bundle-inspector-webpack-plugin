@@ -6,7 +6,7 @@
 
 Under development.  Feedback welcome.
 
-## CLI Usage:
+## CLI:
 
 ```
 npm install -g chunky-monkey
@@ -22,7 +22,7 @@ See a demo:
 chunky-monkey --demo
 ```
 
-## Webpack Plugin Usage:
+## Webpack Plugin:
 
 ```
 npm install chunky-monkey --save-dev
