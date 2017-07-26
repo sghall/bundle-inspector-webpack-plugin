@@ -57,9 +57,9 @@ plugins: [new ChunkyMonkey()]
 // ...
 ```
 
-The server listens via websockets so it will update as your developing.
+The server listens via websockets so it will update as you're developing.
 The 3D graph can be resource intensive, so it may be better to keep it on the treemap while your working.
-It will refresh to the page your currently on each time webpack updates.
+It will refresh to the page you're currently on each time webpack updates.
 
 ## Shoutouts
 
