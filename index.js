@@ -1,3 +1,1 @@
-module.exports = {
-  ChunkyMonkey: require("./src/WebpackPlugin")
-};
+module.exports = require("./src/WebpackPlugin");
