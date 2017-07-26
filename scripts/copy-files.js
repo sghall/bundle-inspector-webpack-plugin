@@ -3,6 +3,7 @@
 
 const fse = require("fs-extra");
 const path = require("path");
+const chalk = require("chalk");
 
 function copyFile(file) {
   const buildPath = path.resolve(__dirname, "../build/", path.basename(file));
@@ -81,12 +82,18 @@ Promise.all(files.map(file => copyFile(file)))
     return fse.copy(src, trg);
   })
   .then(() => {
-    const src = path.resolve(__dirname, "../cli");
-    const trg = path.resolve(__dirname, "../build/cli");
+    const src = path.resolve(__dirname, "../src");
+    const trg = path.resolve(__dirname, "../build/src");
     return fse.copy(src, trg);
   })
   .then(() => {
     const src = path.resolve(__dirname, "../bin.js");
     const trg = path.resolve(__dirname, "../build/bin.js");
     return fse.copy(src, trg);
-  });
+  })
+  .then(() => {
+    const src = path.resolve(__dirname, "../index.js");
+    const trg = path.resolve(__dirname, "../build/index.js");
+    return fse.copy(src, trg);
+  })
+  .then(() => console.log(chalk.green("All files copied successfully.")));
