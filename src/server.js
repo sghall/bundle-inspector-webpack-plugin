@@ -30,7 +30,7 @@ module.exports = function launchServer(dataFile) {
       console.log(
         yellow(`Chunky Monkey: http://localhost:${port}?file=${dataFile}`)
       );
-      console.log(yellow(`Press Control+C to Quit`));
+      console.log(yellow(`Chunky Monkey: Control+C to Quit`));
       opn(`http://localhost:${port}?file=${dataFile}`);
     });
   });
@@ -38,10 +38,8 @@ module.exports = function launchServer(dataFile) {
   const wss = new ws.Server({ server });
 
   function update(d) {
+    console.log(yellow(`Chunky Monkey: http://localhost:${CM_PORT}?file=${d}`));
     wss.clients.forEach(c => {
-      console.log(
-        yellow(`Chunky Monkey: http://localhost:${CM_PORT}?file=${d}`)
-      );
       if (c.readyState === ws.OPEN) {
         c.send(d);
       }
