@@ -1,6 +1,6 @@
 const fse = require("fs-extra");
 const path = require("path");
-const { yellow } = require("chalk");
+const { yellow, cyan } = require("chalk");
 const launchServer = require("./server");
 const { processStats } = require("./process");
 const { getWritePathForSerializedData } = require("./utils");
@@ -53,7 +53,7 @@ class WebpackPlugin {
     fse.writeJsonSync(statsFilepath, stats, { spaces: 2 });
 
     console.log(
-      `${yellow("Chunky Monkey")} saved stats file to ${yellow(statsFilepath)}`
+      `${yellow("Chunky Monkey:")} saved stats file to ${cyan(statsFilepath)}`
     );
   }
 
