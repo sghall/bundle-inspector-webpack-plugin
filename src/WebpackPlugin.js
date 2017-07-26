@@ -55,7 +55,7 @@ class WebpackPlugin {
     const { opts: { open, host, port } } = this;
 
     if (this.server) {
-      this.server.updateChartData(stats);
+      this.server(stats);
     } else {
       this.server = viewer.startServer(stats, {
         open,
