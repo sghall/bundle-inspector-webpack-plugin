@@ -17,6 +17,11 @@ Basic usage:
 chunky-monkey /path/to/webpack/stats.json
 ```
 
+How do I get stats JSON from webpack?
+```
+webpack --json > stats.json
+```
+
 See a demo:
 ```
 chunky-monkey --demo
