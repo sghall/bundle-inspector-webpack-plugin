@@ -6,9 +6,7 @@ const opn = require("opn");
 const ws = require("ws");
 const { yellow } = require("chalk");
 
-const APP_BUILD = "/../app/build";
-
-module.exports = function launchServer(dataPath, contextPath = __dirname) {
+module.exports = function launchServer(dataFile) {
   openPort.find((err, port) => {
     if (err != null) {
       console.log(err);
@@ -17,30 +15,25 @@ module.exports = function launchServer(dataPath, contextPath = __dirname) {
 
     const app = express();
 
-    app.use(express.static(path.join(contextPath, APP_BUILD)));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(contextPath, APP_BUILD, "index.html"));
-    });
-
-    app.listen(port, () => {
-      console.log(yellow(`Chunky Monkey listening on port ${port}`));
-      console.log(yellow(`Press Control+C to Quit`));
-      opn(`http://localhost:${port}?file=${dataPath}`);
+    app.use(express.static(path.join(__dirname, "/../app/build")));
+    app.get("/", (req, res) => {
+      res.sendFile(path.join(__dirname, "/../app/build", "index.html"));
     });
 
     const server = http.createServer(app);
-    const wss = new ws.Server({ server });
 
-    wss.on("connection", function connection(ws, req) {
-      ws.send("something");
+    server.listen(port, () => {
+      console.log(yellow(`Chunky Monkey listening on port ${port}`));
+      console.log(yellow(`Press Control+C to Quit`));
+      opn(`http://localhost:${port}?file=${dataFile}`);
     });
 
-    return function(dataPath) {
+    const wss = new ws.Server({ server });
+
+    return function(dataFile) {
       wss.clients.forEach(c => {
         if (c.readyState === ws.OPEN) {
-          c.send({
-            next: `http://localhost:${port}?file=${dataPath}`
-          });
+          c.send(dataFile);
         }
       });
     };

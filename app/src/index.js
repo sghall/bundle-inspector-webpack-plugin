@@ -3,27 +3,18 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import "bulma/css/bulma.css";
 
-const file = new URLSearchParams((window.location.search || "").slice(1)).get(
-  "file"
-);
-
-let ws;
 try {
-  ws = new WebSocket(`ws://localhost`);
+  const ws = new WebSocket(`ws://${window.location.host}`);
+
+  ws.addEventListener("message", ({ data }) => {
+    window.location = `${window.location.pathname}?file=${data}`;
+  });
 } catch (err) {
-  console.warn("Chunky Monkey could not connect :(");
+  console.warn("Chunky Monkey could not connect via websocket :(");
 }
 
-window.addEventListener(
-  "load",
-  () => {
-    if (ws) {
-      ws.addEventListener("message", event => {
-        console.log(JSON.parse(event.data));
-      });
-    }
-  },
-  false
+const file = new URLSearchParams((window.location.search || "").slice(1)).get(
+  "file"
 );
 
 const path = file !== null ? `/${file}` : "/demo";

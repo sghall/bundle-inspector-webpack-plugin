@@ -1,14 +1,13 @@
 const fse = require("fs-extra");
 const path = require("path");
 const { yellow } = require("chalk");
-const server = require("./server");
+const launchServer = require("./server");
+const { processStats } = require("./process");
+const { getWritePathForSerializedData } = require("./utils");
 
 class WebpackPlugin {
   constructor(opts) {
     this.opts = {
-      host: "127.0.0.1",
-      port: 8888,
-      open: true,
       generateStatsFile: false,
       statsFilename: "stats.json",
       statsOptions: null
@@ -29,7 +28,11 @@ class WebpackPlugin {
         actions.push(() => this.generateStatsFile(stats));
       }
 
-      actions.push(() => this.startServer(stats));
+      const dataFile = `data_${Date.now()}`;
+      const writePath = getWritePathForSerializedData(dataFile);
+
+      fs.writeFileSync(writePath, processStats(stats));
+      actions.push(() => this.startServer(dataFile));
 
       if (actions.length) {
         setImmediate(() => {
@@ -51,17 +54,11 @@ class WebpackPlugin {
     );
   }
 
-  startServer(stats) {
-    const { opts: { open, host, port } } = this;
-
+  startServer(dataFile) {
     if (this.server) {
-      this.server(stats);
+      this.server(dataFile);
     } else {
-      this.server = viewer.startServer(stats, {
-        open,
-        host,
-        port
-      });
+      this.server = launchServer(dataFile);
     }
   }
 }

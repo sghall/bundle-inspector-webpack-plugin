@@ -1,11 +1,10 @@
-const { processStats } = require("./process");
 const meow = require("meow");
 const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
-
-const { getWritePathForSerializedData } = require("./utils");
 const server = require("./server");
+const { processStats } = require("./process");
+const { getWritePathForSerializedData } = require("./utils");
 
 const cli = meow(
   `
@@ -34,15 +33,15 @@ if (cli.flags["demo"]) {
   const input = cli.input[0];
   const stats = fs.readFileSync(path.resolve(input), "utf-8");
 
-  const dataPath = `data_${Date.now()}`;
-  const writePath = getWritePathForSerializedData(dataPath);
+  const dataFile = `data_${Date.now()}`;
+  const writePath = getWritePathForSerializedData(dataFile);
 
   fs.writeFileSync(writePath, processStats(stats));
 
   console.log(`
     stats file: ${chalk.yellow(input)}
-    data file: ${chalk.yellow(dataPath)}
+    data file: ${chalk.yellow(dataFile)}
   `);
 
-  server(dataPath);
+  server(dataFile);
 }
