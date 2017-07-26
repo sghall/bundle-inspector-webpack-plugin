@@ -6,12 +6,15 @@ const { processStats } = require("./process");
 const { getWritePathForSerializedData } = require("./utils");
 
 class WebpackPlugin {
-  constructor(opts) {
-    this.opts = {
-      generateStatsFile: false,
-      statsFilename: "stats.json",
-      statsOptions: null
-    };
+  constructor(opts = {}) {
+    this.opts = Object.assign(
+      {
+        generateStatsFile: false,
+        statsFilename: "stats.json",
+        statsOptions: null
+      },
+      opts
+    );
 
     this.server = null;
   }
