@@ -1,7 +1,7 @@
 {
-  "name": "chunky-monkey",
+  "name": "bundle-inspector-webpack-plugin",
   "version": "0.1.8",
-  "description": "Analysis Tools for Webpack Chunks",
+  "description": "Analysis Tools for Webpack",
   "private": true,
   "keywords": [
     "webpack",
