@@ -34,22 +34,22 @@ npm install bundle-inspector-webpack-plugin --save-dev
 ### CJS Import:
 
 ```
-const Inspector = require('bundle-inspector-webpack-plugin');
+const BundleInspector = require('bundle-inspector-webpack-plugin');
 
 // Add it to the plugins in your webpack config...
 // ...
-plugins: [new Inspector()]
+plugins: [new BundleInspector()]
 // ...
 ```
 
 ### ES6 Import:
 
 ```
-import Inspector from 'bundle-inspector-webpack-plugin';
+import BundleInspector from 'bundle-inspector-webpack-plugin';
 
 // Add it to the plugins in your webpack config...
 // ...
-plugins: [new Inspector()]
+plugins: [new BundleInspector()]
 // ...
 ```
 
