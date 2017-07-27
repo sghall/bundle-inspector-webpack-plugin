@@ -46,7 +46,7 @@ function createPackageFile() {
       } = packageData;
 
       const minimalPackage = {
-        name: "chunky-monkey",
+        name: "bundle-inspector-webpack-plugin",
         author,
         version,
         description,
