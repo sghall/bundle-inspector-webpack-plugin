@@ -1,22 +1,18 @@
-<div align="center">
-  <a href="https://github.com/sghall/chunky-monkey">
-  	<img src="https://user-images.githubusercontent.com/4615775/28554415-32c8fa48-70ae-11e7-8917-f19659b27be4.png" alt="Chunky Monkey Logo" style="width:450px;"/>
-  </a>
-</div>
+## bundle-inspector-webpack-plugin
 
 Under development.  Feedback welcome.
 
-## See a [demo in your browser](https://sghall.github.io/chunky-monkey/#/) - NOT mobile friendly
+## See a [demo in your browser](https://sghall.github.io/bundle-inspector-webpack-plugin/#/) - NOT mobile friendly
 
 ## CLI:
 
 ```
-npm install -g chunky-monkey
+npm install -g bundle-inspector-webpack-plugin
 ```
 
 Basic usage:
 ```
-chunky-monkey /path/to/webpack/stats.json
+bundle-inspector-webpack-plugin /path/to/webpack/stats.json
 ```
 
 How do I get JSON stats from webpack?
@@ -26,34 +22,34 @@ webpack --json > stats.json
 
 See a demo:
 ```
-chunky-monkey --demo
+bundle-inspector-webpack-plugin --demo
 ```
 
 ## Webpack Plugin:
 
 ```
-npm install chunky-monkey --save-dev
+npm install bundle-inspector-webpack-plugin --save-dev
 ```
 
 ### CJS Import:
 
 ```
-const ChunkyMonkey = require('chunky-monkey');
+const Inspector = require('bundle-inspector-webpack-plugin');
 
 // Add it to the plugins in your webpack config...
 // ...
-plugins: [new ChunkyMonkey()]
+plugins: [new Inspector()]
 // ...
 ```
 
 ### ES6 Import:
 
 ```
-import ChunkyMonkey from 'chunky-monkey';
+import Inspector from 'bundle-inspector-webpack-plugin';
 
 // Add it to the plugins in your webpack config...
 // ...
-plugins: [new ChunkyMonkey()]
+plugins: [new Inspector()]
 // ...
 ```
 
@@ -89,11 +85,11 @@ Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mik
 
 ## Screenshots:
 
-<a href="https://github.com/sghall/chunky-monkey">
+<a href="https://github.com/sghall/bundle-inspector-webpack-plugin">
 	<img src="https://user-images.githubusercontent.com/4615775/28555665-2659bcfe-70b6-11e7-8844-d8f3e4a9381a.png" alt="Chunky Monkey" style="width:450px;"/>
 </a>
 
-<a href="https://github.com/sghall/chunky-monkey">
+<a href="https://github.com/sghall/bundle-inspector-webpack-plugin">
 	<img src="https://user-images.githubusercontent.com/4615775/28555672-3187cbe8-70b6-11e7-97b4-2dd688aa8b72.png" alt="Chunky Monkey" style="width:450px;"/>
 </a>
 
