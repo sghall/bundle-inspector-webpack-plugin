@@ -11,14 +11,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sghall/chunky-monkey.git"
+    "url": "git+https://github.com/sghall/bundle-inspector-webpack-plugin.git"
   },
   "author": "Steven Hall <hall.steven.g@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sghall/chunky-monkey/issues"
+    "url": "https://github.com/sghall/bundle-inspector-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/sghall/chunky-monkey#readme",
+  "homepage": "https://github.com/sghall/bundle-inspector-webpack-plugin#readme",
   "bin": "bin.js",
   "main": "index.js",
   "scripts": {
