@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { formatBytes } from "../utils";
-import monkey from "./chunky-monkey.svg";
+import logo from "./logo.svg";
 
 const TopNav = ({ file, total }) =>
   <nav className="navbar">
     <div className="navbar-brand">
       <div className="navbar-item">
-        <img src={monkey} alt="chunky-monkey" style={{ height: 32 }} />
+        <img
+          src={logo}
+          alt="bundle-inspector-webpack-plugin"
+          style={{ height: 32 }}
+        />
       </div>
       <div className="navbar-item">
         <a
-          href="https://github.com/sghall/chunky-monkey"
+          href="https://github.com/sghall/bundle-inspector-webpack-plugin"
           className="button is-outlined"
         >
           Github

@@ -25,8 +25,10 @@ const App = ({ file, data }) => {
         <footer className="footer">
           <div className="container">
             <div className="content has-text-centered">
-              Chunky Monkey on
-              <a href="https://github.com/sghall/chunky-monkey"> Github</a>
+              Bundle Inspector on
+              <a href="https://github.com/sghall/bundle-inspector-webpack-plugin">
+                {" "}Github
+              </a>
             </div>
           </div>
         </footer>
