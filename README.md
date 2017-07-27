@@ -86,11 +86,11 @@ Uses the [zoomable treemaps](https://bost.ocks.org/mike/treemap/) concept by Mik
 ## Screenshots:
 
 <a href="https://github.com/sghall/bundle-inspector-webpack-plugin">
-	<img src="https://user-images.githubusercontent.com/4615775/28555665-2659bcfe-70b6-11e7-8844-d8f3e4a9381a.png" alt="Chunky Monkey" style="width:450px;"/>
+	<img src="https://user-images.githubusercontent.com/4615775/28555665-2659bcfe-70b6-11e7-8844-d8f3e4a9381a.png" alt="Bundle Inspector" style="width:450px;"/>
 </a>
 
 <a href="https://github.com/sghall/bundle-inspector-webpack-plugin">
-	<img src="https://user-images.githubusercontent.com/4615775/28555672-3187cbe8-70b6-11e7-97b4-2dd688aa8b72.png" alt="Chunky Monkey" style="width:450px;"/>
+	<img src="https://user-images.githubusercontent.com/4615775/28555672-3187cbe8-70b6-11e7-97b4-2dd688aa8b72.png" alt="Bundle Inspector" style="width:450px;"/>
 </a>
 
 

@@ -9,13 +9,13 @@ const { getWritePathForSerializedData } = require("./utils");
 const cli = meow(
   `
   Usage:
-    chunky-monkey  <stats file path>
+    bundle-inspector-webpack-plugin  <stats file path>
 
   Options:
     --demo: view demo
 
   Example:
-    chunky-monkey my_app/stats.json
+    bundle-inspector-webpack-plugin my_app/stats.json
 `,
   {
     boolean: ["demo"]

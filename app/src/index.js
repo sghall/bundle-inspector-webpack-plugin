@@ -10,7 +10,7 @@ try {
     window.location = `${window.location.pathname}?file=${data}`;
   });
 } catch (err) {
-  console.warn("Chunky Monkey could not connect via websocket :(");
+  console.warn("Bundle Inspector could not connect via websocket :(");
 }
 
 const file = new URLSearchParams((window.location.search || "").slice(1)).get(

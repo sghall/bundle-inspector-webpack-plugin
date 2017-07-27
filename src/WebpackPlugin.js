@@ -53,7 +53,9 @@ class WebpackPlugin {
     fse.writeJsonSync(statsFilepath, stats, { spaces: 2 });
 
     console.log(
-      `${yellow("Chunky Monkey:")} saved stats file to ${cyan(statsFilepath)}`
+      `${yellow("Bundle Inspector:")} saved stats file to ${cyan(
+        statsFilepath
+      )}`
     );
   }
 
