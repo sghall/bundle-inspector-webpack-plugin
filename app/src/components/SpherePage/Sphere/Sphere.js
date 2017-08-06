@@ -26,7 +26,7 @@ class Graph extends Component {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera();
-    camera.position.z = 1000;
+    camera.position.z = 2000;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(innerWidth, innerHeight);
@@ -127,8 +127,8 @@ class Graph extends Component {
     }
 
     function resample(coordinates) {
-      const i = 0;
-      const j = -1;
+      let i = 0;
+      let j = -1;
 
       const n = coordinates.length;
       const source = coordinates.slice();
@@ -186,22 +186,26 @@ class Graph extends Component {
       const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
       const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
 
-      console.log(xDomain, yDomain);
-
       node.attr("position", ({ x = 0, y = 0 }) => {
         return vertex({ x: xScale(x), y: yScale(y) });
       });
 
       link.each(function({ source, target }) {
-        const v1 = vertex({ x: xScale(source.x), y: yScale(source.y) });
-        const v2 = vertex({ x: xScale(target.x), y: yScale(target.y) });
-
-        this.geometry.vertices = [
-          new THREE.Vector3(v1.x, v1.y, v1.z),
-          new THREE.Vector3(v2.x, v2.y, v2.z)
+        const coordinates = [
+          [xScale(source.x), yScale(source.y)],
+          [xScale(target.x), yScale(target.y)]
         ];
 
-        this.geometry.verticesNeedUpdate = true;
+        resample(coordinates);
+
+        const geo = new THREE.Geometry();
+
+        geo.vertices = coordinates.map(point => {
+          const p = vertex({ x: point[0], y: point[1] });
+          return new THREE.Vector3(p.x, p.y, p.z);
+        });
+
+        this.geometry = geo;
       });
     }
 
