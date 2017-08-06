@@ -13,6 +13,7 @@ export default function processData(data) {
   function add(children, parent, chunkName) {
     for (let i = 0; i < children.length; i++) {
       const target = createNode(children[i]);
+      target.chunkName = chunkName;
 
       nodes.push(target);
 
@@ -38,6 +39,7 @@ export default function processData(data) {
 
   for (let i = 0; i < data.length; i++) {
     const chunk = createNode(data[i]);
+    chunk.chunkName = chunk.name;
     nodes.push(chunk);
     add(data[i].groups, chunk, chunk.name);
   }

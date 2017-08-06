@@ -85,10 +85,6 @@ class Graph extends Component {
 
     treemap(h);
 
-    // getTexture(h);
-
-    console.log("hierarchy", h);
-
     container
       .append("mesh")
       .attr("geometry", new THREE.SphereGeometry(radius * 0.975, 200, 200))
@@ -143,8 +139,8 @@ class Graph extends Component {
     forceSimulation()
       .numDimensions(2)
       .nodes(nodes)
-      .force("link", forceLink(links).distance(20).strength(0.95))
-      .force("charge", forceManyBody().strength(-10))
+      .force("link", forceLink(links).distance(20).strength(1.25))
+      .force("charge", forceManyBody().strength(-50))
       .force("center", forceCenter())
       .on("end", ticked);
 
@@ -233,9 +229,12 @@ class Graph extends Component {
       });
 
       console.log(chunkScales);
-      // node.attr("position", ({ x = 0, y = 0 }) => {
-      //   return vertex({ x: xScale(x), y: yScale(y) });
-      // });
+
+      node.attr("position", d => {
+        const x = chunkScales[d.chunkName].x;
+        const y = chunkScales[d.chunkName].y;
+        return vertex({ x: x(xScale(d.x || 0)), y: y(yScale(d.y || 0)) });
+      });
 
       link.each(function({ chunkName, source, target }) {
         const x = chunkScales[chunkName].x;
