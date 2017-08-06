@@ -24,6 +24,9 @@ const TopNav = ({ file, total }) =>
       <Link className="navbar-item" to={`/?file=${file}`}>
         <div className="button is-black">3D Graph</div>
       </Link>
+      <Link className="navbar-item" to={`/sphere?file=${file}`}>
+        <div className="button is-black">Sphere</div>
+      </Link>
       <Link className="navbar-item" to={`/treemap?file=${file}`}>
         <div className="button is-black">Treemap</div>
       </Link>
