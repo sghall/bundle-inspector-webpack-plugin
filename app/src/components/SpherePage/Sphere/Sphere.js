@@ -14,6 +14,8 @@ import raycast from "./raycast";
 import materials from "./materials";
 import processData from "./processData";
 
+const radius = 700;
+
 class Graph extends Component {
   componentWillMount() {
     this.mounted = true;
@@ -50,6 +52,19 @@ class Graph extends Component {
 
     const rootNode = select(scene);
     const container = rootNode.append("object");
+
+    container
+      .append("mesh")
+      .attr("geometry", new THREE.SphereGeometry(radius, 10, 10))
+      .attr(
+        "material",
+        new THREE.MeshPhongMaterial({
+          color: "#555",
+          emissive: "#555",
+          specular,
+          shininess
+        })
+      );
 
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
     const nodeScale = scaleLinear().range([0.5, 2.25]).domain(sizes);
@@ -120,9 +135,9 @@ class Graph extends Component {
       const c = Math.cos(p);
 
       return {
-        x: 700 * c * Math.cos(l),
-        y: 700 * c * Math.sin(l),
-        z: 700 * Math.sin(p)
+        x: radius * c * Math.cos(l),
+        y: radius * c * Math.sin(l),
+        z: radius * Math.sin(p)
       };
     }
 
