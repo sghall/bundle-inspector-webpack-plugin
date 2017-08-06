@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { scaleLinear } from "d3-scale";
 import * as THREE from "three";
+import * as d3 from "d3";
 import OrbitControls from "../OrbitControls";
 import { select } from "subunit";
 import {
@@ -108,7 +109,7 @@ class Graph extends Component {
     forceSimulation()
       .numDimensions(2)
       .nodes(nodes)
-      .force("link", forceLink(links).distance(5).strength(1.5))
+      .force("link", forceLink(links).distance(20).strength(0.95))
       .force("charge", forceManyBody().strength(-10))
       .force("center", forceCenter())
       .on("end", ticked);
@@ -126,36 +127,39 @@ class Graph extends Component {
     }
 
     function ticked() {
-      const xExtent = [Infinity, -Infinity];
-      const yExtent = [Infinity, -Infinity];
-
-      node.attr("position", ({ x = 0, y = 0, z = 0 }) => {
-        return vertex({ x, y });
-      });
+      const xDomain = [Infinity, -Infinity];
+      const yDomain = [Infinity, -Infinity];
 
       node.each(function(d) {
-        if (d.x < xExtent[0]) {
-          xExtent[0] = d.x;
+        if (d.x < xDomain[0]) {
+          xDomain[0] = d.x;
         }
 
-        if (d.x > xExtent[1]) {
-          xExtent[1] = d.x;
+        if (d.x > xDomain[1]) {
+          xDomain[1] = d.x;
         }
 
-        if (d.y < yExtent[0]) {
-          yExtent[0] = d.y;
+        if (d.y < yDomain[0]) {
+          yDomain[0] = d.y;
         }
 
-        if (d.y > yExtent[1]) {
-          yExtent[1] = d.y;
+        if (d.y > yDomain[1]) {
+          yDomain[1] = d.y;
         }
       });
 
-      console.log(xExtent, yExtent);
+      const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
+      const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
+
+      console.log(xDomain, yDomain);
+
+      node.attr("position", ({ x = 0, y = 0 }) => {
+        return vertex({ x: xScale(x), y: yScale(y) });
+      });
 
       link.each(function({ source, target }) {
-        const v1 = vertex(source);
-        const v2 = vertex(target);
+        const v1 = vertex({ x: xScale(source.x), y: yScale(source.y) });
+        const v2 = vertex({ x: xScale(target.x), y: yScale(target.y) });
 
         this.geometry.vertices = [
           new THREE.Vector3(v1.x, v1.y, v1.z),
