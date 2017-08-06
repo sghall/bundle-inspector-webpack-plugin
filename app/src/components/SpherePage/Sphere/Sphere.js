@@ -55,11 +55,32 @@ class Graph extends Component {
 
     container
       .append("mesh")
-      .attr("geometry", new THREE.SphereGeometry(radius * 0.95, 200, 200))
+      .attr("geometry", new THREE.SphereGeometry(radius * 0.975, 200, 200))
       .attr("material", new THREE.MeshBasicMaterial({ color: "#333" }));
 
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
     const nodeScale = scaleLinear().range([0.5, 2.25]).domain(sizes);
+
+    const treemap = d3.treemap().round(false);
+
+    const chunks = data.map(d => {
+      return {
+        size: d.statSize,
+        label: d.label
+      };
+    });
+
+    const x = { children: chunks };
+    const h = d3
+      .hierarchy(x, n => n.children || null)
+      .sum(d => d.size)
+      .sort((a, b) => {
+        return a.value - b.value;
+      });
+
+    treemap(h);
+
+    console.log("hierarchy", h);
 
     const node = container
       .selectAll("node")
@@ -169,51 +190,40 @@ class Graph extends Component {
     }
 
     function ticked() {
-      const xDomain = [Infinity, -Infinity];
-      const yDomain = [Infinity, -Infinity];
-
-      node.each(function(d) {
-        if (d.x < xDomain[0]) {
-          xDomain[0] = d.x;
-        }
-
-        if (d.x > xDomain[1]) {
-          xDomain[1] = d.x;
-        }
-
-        if (d.y < yDomain[0]) {
-          yDomain[0] = d.y;
-        }
-
-        if (d.y > yDomain[1]) {
-          yDomain[1] = d.y;
-        }
-      });
-
-      const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
-      const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
-
-      node.attr("position", ({ x = 0, y = 0 }) => {
-        return vertex({ x: xScale(x), y: yScale(y) });
-      });
-
-      link.each(function({ source, target }) {
-        const coordinates = [
-          [xScale(source.x), yScale(source.y)],
-          [xScale(target.x), yScale(target.y)]
-        ];
-
-        resample(coordinates);
-
-        const geo = new THREE.Geometry();
-
-        geo.vertices = coordinates.map(point => {
-          const p = vertex({ x: point[0], y: point[1] });
-          return new THREE.Vector3(p.x, p.y, p.z);
-        });
-
-        this.geometry = geo;
-      });
+      // const xDomain = [Infinity, -Infinity];
+      // const yDomain = [Infinity, -Infinity];
+      // node.each(function(d) {
+      //   if (d.x < xDomain[0]) {
+      //     xDomain[0] = d.x;
+      //   }
+      //   if (d.x > xDomain[1]) {
+      //     xDomain[1] = d.x;
+      //   }
+      //   if (d.y < yDomain[0]) {
+      //     yDomain[0] = d.y;
+      //   }
+      //   if (d.y > yDomain[1]) {
+      //     yDomain[1] = d.y;
+      //   }
+      // });
+      // const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
+      // const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
+      // node.attr("position", ({ x = 0, y = 0 }) => {
+      //   return vertex({ x: xScale(x), y: yScale(y) });
+      // });
+      // link.each(function({ source, target }) {
+      //   const coordinates = [
+      //     [xScale(source.x), yScale(source.y)],
+      //     [xScale(target.x), yScale(target.y)]
+      //   ];
+      //   resample(coordinates);
+      //   const geo = new THREE.Geometry();
+      //   geo.vertices = coordinates.map(point => {
+      //     const p = vertex({ x: point[0], y: point[1] });
+      //     return new THREE.Vector3(p.x, p.y, p.z);
+      //   });
+      //   this.geometry = geo;
+      // });
     }
 
     const control = new OrbitControls(camera, canvas);
