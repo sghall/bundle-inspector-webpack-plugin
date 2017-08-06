@@ -13,8 +13,9 @@ import {
 import raycast from "./raycast";
 import materials from "./materials";
 import processData from "./processData";
+import getTexture from "./getTexture";
 
-const radius = 700;
+const radius = 800;
 
 class Graph extends Component {
   componentWillMount() {
@@ -53,13 +54,17 @@ class Graph extends Component {
     const rootNode = select(scene);
     const container = rootNode.append("object");
 
-    container
-      .append("mesh")
-      .attr("geometry", new THREE.SphereGeometry(radius * 0.975, 200, 200))
-      .attr("material", new THREE.MeshBasicMaterial({ color: "#333" }));
-
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
     const nodeScale = scaleLinear().range([0.5, 2.25]).domain(sizes);
+
+    const linkColors = {};
+
+    data.forEach((d, i) => {
+      linkColors[d.label] = new THREE.LineBasicMaterial({
+        color: colors(d.label),
+        transparent: false
+      });
+    });
 
     const treemap = d3.treemap().round(false);
 
@@ -80,7 +85,17 @@ class Graph extends Component {
 
     treemap(h);
 
+    // getTexture(h);
+
     console.log("hierarchy", h);
+
+    container
+      .append("mesh")
+      .attr("geometry", new THREE.SphereGeometry(radius * 0.975, 200, 200))
+      .attr(
+        "material",
+        new THREE.MeshBasicMaterial({ map: getTexture(h, colors) })
+      );
 
     const node = container
       .selectAll("node")
@@ -106,15 +121,6 @@ class Graph extends Component {
         }
       })
       .on("mousemove", updateInfo);
-
-    const linkColors = {};
-
-    data.forEach((d, i) => {
-      linkColors[d.label] = new THREE.LineBasicMaterial({
-        color: colors(d.label),
-        transparent: false
-      });
-    });
 
     const link = container
       .selectAll("link")
@@ -190,40 +196,64 @@ class Graph extends Component {
     }
 
     function ticked() {
-      // const xDomain = [Infinity, -Infinity];
-      // const yDomain = [Infinity, -Infinity];
-      // node.each(function(d) {
-      //   if (d.x < xDomain[0]) {
-      //     xDomain[0] = d.x;
-      //   }
-      //   if (d.x > xDomain[1]) {
-      //     xDomain[1] = d.x;
-      //   }
-      //   if (d.y < yDomain[0]) {
-      //     yDomain[0] = d.y;
-      //   }
-      //   if (d.y > yDomain[1]) {
-      //     yDomain[1] = d.y;
-      //   }
-      // });
-      // const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
-      // const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
+      const xDomain = [Infinity, -Infinity];
+      const yDomain = [Infinity, -Infinity];
+      node.each(function(d) {
+        if (d.x < xDomain[0]) {
+          xDomain[0] = d.x;
+        }
+        if (d.x > xDomain[1]) {
+          xDomain[1] = d.x;
+        }
+        if (d.y < yDomain[0]) {
+          yDomain[0] = d.y;
+        }
+        if (d.y > yDomain[1]) {
+          yDomain[1] = d.y;
+        }
+      });
+
+      const xScale = d3.scaleLinear().range([-180, 180]).domain(xDomain);
+      const yScale = d3.scaleLinear().range([-90, 90]).domain(yDomain);
+
+      const chunkScales = {};
+
+      h.children.forEach(chunk => {
+        chunkScales[chunk.data.label] = {};
+
+        chunkScales[chunk.data.label].x = d3
+          .scaleLinear()
+          .range([360 * chunk.x0 - 180, 360 * chunk.x1 - 180])
+          .domain([-180, 180]);
+
+        chunkScales[chunk.data.label].y = d3
+          .scaleLinear()
+          .range([180 * chunk.y0 - 90, 180 * chunk.y1 - 90])
+          .domain([-90, 90]);
+      });
+
+      console.log(chunkScales);
       // node.attr("position", ({ x = 0, y = 0 }) => {
       //   return vertex({ x: xScale(x), y: yScale(y) });
       // });
-      // link.each(function({ source, target }) {
-      //   const coordinates = [
-      //     [xScale(source.x), yScale(source.y)],
-      //     [xScale(target.x), yScale(target.y)]
-      //   ];
-      //   resample(coordinates);
-      //   const geo = new THREE.Geometry();
-      //   geo.vertices = coordinates.map(point => {
-      //     const p = vertex({ x: point[0], y: point[1] });
-      //     return new THREE.Vector3(p.x, p.y, p.z);
-      //   });
-      //   this.geometry = geo;
-      // });
+
+      link.each(function({ chunkName, source, target }) {
+        const x = chunkScales[chunkName].x;
+        const y = chunkScales[chunkName].y;
+
+        const coordinates = [
+          [x(xScale(source.x)), y(yScale(source.y))],
+          [x(xScale(target.x)), y(yScale(target.y))]
+        ];
+
+        resample(coordinates);
+        const geo = new THREE.Geometry();
+        geo.vertices = coordinates.map(point => {
+          const p = vertex({ x: point[0], y: point[1] });
+          return new THREE.Vector3(p.x, p.y, p.z);
+        });
+        this.geometry = geo;
+      });
     }
 
     const control = new OrbitControls(camera, canvas);
