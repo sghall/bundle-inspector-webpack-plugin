@@ -126,6 +126,41 @@ class Graph extends Component {
       };
     }
 
+    function resample(coordinates) {
+      const i = 0;
+      const j = -1;
+
+      const n = coordinates.length;
+      const source = coordinates.slice();
+
+      let p0;
+      let x0;
+      let y0;
+
+      let p1 = coordinates[0];
+      let x1 = p1[0];
+      let y1 = p1[1];
+
+      let dx;
+      let dy;
+      let d2;
+
+      const m2 = 10; // squared minimum angular distance
+
+      while (++i < n) {
+        (p0 = p1), (x0 = x1), (y0 = y1);
+        (p1 = source[i]), (x1 = p1[0]), (y1 = p1[1]);
+        (dx = x1 - x0), (dy = y1 - y0), (d2 = dx * dx + dy * dy);
+        coordinates[++j] = p0;
+        if (d2 > m2)
+          for (var k = 1, m = Math.ceil(Math.sqrt(d2 / m2)); k < m; ++k) {
+            coordinates[++j] = [x0 + dx * k / m, y0 + dy * k / m];
+          }
+      }
+      coordinates[++j] = p1;
+      coordinates.length = j + 1;
+    }
+
     function ticked() {
       const xDomain = [Infinity, -Infinity];
       const yDomain = [Infinity, -Infinity];
