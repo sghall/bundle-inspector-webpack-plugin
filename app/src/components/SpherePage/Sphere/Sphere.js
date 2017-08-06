@@ -55,16 +55,8 @@ class Graph extends Component {
 
     container
       .append("mesh")
-      .attr("geometry", new THREE.SphereGeometry(radius, 10, 10))
-      .attr(
-        "material",
-        new THREE.MeshPhongMaterial({
-          color: "#555",
-          emissive: "#555",
-          specular,
-          shininess
-        })
-      );
+      .attr("geometry", new THREE.SphereGeometry(radius * 0.95, 200, 200))
+      .attr("material", new THREE.MeshBasicMaterial({ color: "#333" }));
 
     const nodeGeometry = new THREE.SphereGeometry(5, 10, 10);
     const nodeScale = scaleLinear().range([0.5, 2.25]).domain(sizes);
